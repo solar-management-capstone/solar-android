@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_solar_mp/constants/app_color.dart';
 import 'package:mobile_solar_mp/constants/routes.dart';
+import 'package:mobile_solar_mp/features/construction_contract/screens/construction_contract_screen.dart';
 import 'package:mobile_solar_mp/features/home/screens/home_screen.dart';
 import 'package:mobile_solar_mp/features/profile/screens/profile_screen.dart';
 
 class NavigationBarApp extends StatefulWidget {
   static const String routeName = RoutePath.navigationBarRoute;
-  const NavigationBarApp({super.key});
+
+  int? pageIndex;
+  NavigationBarApp({super.key, this.pageIndex});
 
   @override
   State<NavigationBarApp> createState() => _NavigationBarAppState();
@@ -16,6 +19,7 @@ class _NavigationBarAppState extends State<NavigationBarApp> {
   int _currentPageIndex = 0;
 
   void _onItemTapped(int index) {
+    widget.pageIndex = null;
     setState(() {
       _currentPageIndex = index;
     });
@@ -23,6 +27,12 @@ class _NavigationBarAppState extends State<NavigationBarApp> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.pageIndex != null) {
+      setState(() {
+        _currentPageIndex = widget.pageIndex!;
+      });
+    }
+
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         unselectedItemColor: Colors.black,
@@ -50,11 +60,7 @@ class _NavigationBarAppState extends State<NavigationBarApp> {
       ),
       body: const [
         HomeScreen(),
-        SafeArea(
-          child: Center(
-            child: Text('Contract'),
-          ),
-        ),
+        ConstructionContractScreen(),
         SafeArea(
           child: Center(
             child: Text('Chat'),

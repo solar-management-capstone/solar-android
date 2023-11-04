@@ -2,9 +2,13 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:full_screen_image/full_screen_image.dart';
+import 'package:mobile_solar_mp/common/handle_exception/bad_request_exception.dart';
 import 'package:mobile_solar_mp/common/widgets/custom_button.dart';
+import 'package:mobile_solar_mp/common/widgets/custom_textfield.dart';
 import 'package:mobile_solar_mp/constants/routes.dart';
 import 'package:mobile_solar_mp/constants/utils.dart';
+import 'package:mobile_solar_mp/features/navigation_bar/navigation_bar_app.dart';
+import 'package:mobile_solar_mp/features/package_product/service/package_product_service.dart';
 import 'package:mobile_solar_mp/models/package.dart';
 import 'package:mobile_solar_mp/models/package_product.dart';
 import 'package:mobile_solar_mp/models/product.dart';
@@ -24,6 +28,51 @@ class _PackageProductScreenState extends State<PackageProductScreen> {
     super.initState();
   }
 
+  void _openModal(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(8.0),
+          topRight: Radius.circular(8.0),
+        ),
+      ),
+      builder: (_) => _buildModal(),
+    );
+  }
+
+  void _handleSendRequest(String description) async {
+    FocusManager.instance.primaryFocus?.unfocus();
+    try {
+      await PackageProductService().createRequest(
+        context: context,
+        description: description,
+        packageId: widget.package!.packageId!,
+      );
+      if (mounted) {
+        showSnackBar(context, 'Gửi yêu cầu tư vấn thành công');
+        Navigator.pop(context);
+      }
+    } on CustomException catch (e) {
+      if (mounted) {
+        showSnackBar(
+          context,
+          e.cause,
+          color: Colors.red,
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        showSnackBar(
+          context,
+          e.toString(),
+          color: Colors.red,
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     List<PackageProduct> listPackageProduct =
@@ -33,9 +82,13 @@ class _PackageProductScreenState extends State<PackageProductScreen> {
       appBar: AppBar(
         title: const Text('Gói sản phẩm'),
         leading: IconButton(
-          onPressed: () => Navigator.pushNamedAndRemoveUntil(
+          onPressed: () => Navigator.pushAndRemoveUntil(
             context,
-            RoutePath.homeRoute,
+            MaterialPageRoute(
+              builder: (context) => NavigationBarApp(
+                pageIndex: 0,
+              ),
+            ),
             (route) => false,
           ),
           icon: const Icon(Icons.arrow_back),
@@ -134,7 +187,40 @@ class _PackageProductScreenState extends State<PackageProductScreen> {
                 ),
               ),
             ),
-            CustomButton(text: 'Yêu cầu tư vấn', onTap: () {})
+            CustomButton(
+              text: 'Yêu cầu tư vấn',
+              onTap: () => _openModal(context),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildModal() {
+    final TextEditingController descriptionController = TextEditingController();
+
+    return Padding(
+      padding:
+          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      child: Container(
+        padding: const EdgeInsets.all(16.0),
+        height: 250.0,
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 20.0,
+            ),
+            CustomTextField(
+              controller: descriptionController,
+              hintText: 'Mô tả yêu cầu',
+              maxLines: 2,
+            ),
+            const SizedBox(height: 16.0),
+            CustomButton(
+              text: 'Gửi yêu cầu',
+              onTap: () => _handleSendRequest(descriptionController.text),
+            ),
           ],
         ),
       ),

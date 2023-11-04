@@ -5,6 +5,7 @@ import 'package:mobile_solar_mp/config/http/http_client.dart';
 import 'package:mobile_solar_mp/constants/error_handling.dart';
 import 'package:mobile_solar_mp/constants/global_variables.dart';
 import 'package:mobile_solar_mp/models/package.dart';
+import 'package:mobile_solar_mp/utils/shared_preferences.dart';
 
 class PackageProductService {
   Future<Package> getPackageById({
@@ -27,5 +28,26 @@ class PackageProductService {
       );
     }
     return package;
+  }
+
+  Future<void> createRequest({
+    required BuildContext context,
+    required String packageId,
+    required String description,
+  }) async {
+    final response = await HttpClient.http.post(
+      Uri.parse('$uri/Request/Insert-request'),
+      body: json.encode(
+        {
+          'packageId': packageId,
+          'accountId': SharedPreferencesUtils.getId(),
+          'description': description
+        },
+      ),
+    );
+
+    if (context.mounted) {
+      httpErrorHandle(response: response, context: context, onSuccess: () {});
+    }
   }
 }

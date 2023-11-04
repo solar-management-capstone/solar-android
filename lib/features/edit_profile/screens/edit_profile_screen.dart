@@ -5,6 +5,7 @@ import 'package:mobile_solar_mp/constants/global_variables.dart';
 import 'package:mobile_solar_mp/constants/routes.dart';
 import 'package:mobile_solar_mp/constants/utils.dart';
 import 'package:mobile_solar_mp/features/edit_profile/service/edit_profile_service.dart';
+import 'package:mobile_solar_mp/features/navigation_bar/navigation_bar_app.dart';
 import 'package:mobile_solar_mp/models/user.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -105,11 +106,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () => Navigator.pushNamedAndRemoveUntil(
-            context,
-            RoutePath.profileRoute,
-            (route) => false,
-          ),
+          onPressed: () => Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) => NavigationBarApp(
+                  pageIndex: 3,
+                ),
+              ),
+              (route) => false),
           icon: const Icon(Icons.arrow_back),
         ),
         title: const Text('Chỉnh sửa thông tin'),

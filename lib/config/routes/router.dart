@@ -14,7 +14,7 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
     case HomeScreen.routeName:
       return MaterialPageRoute(builder: (_) => const HomeScreen());
     case NavigationBarApp.routeName:
-      return MaterialPageRoute(builder: (_) => const NavigationBarApp());
+      return MaterialPageRoute(builder: (_) => NavigationBarApp());
     case EditProfileScreen.routeName:
       return MaterialPageRoute(builder: (_) => const EditProfileScreen());
     case ProfileScreen.routeName:

@@ -24,10 +24,15 @@ class _HomeScreenState extends State<HomeScreen> {
   double _currentSliderRoofAreaValue = 0;
   double _currentSliderElectricBillValue = 1000000;
 
+  late Future<List<Package>> packages = [] as Future<List<Package>>;
+
   Future<List<Package>> getPackages() async {
     List<Package> packages = [];
     try {
-      packages = await HomeService().getPackages(context: context);
+      packages = await HomeService().getPackages(
+          context: context,
+          roofArea: _currentSliderRoofAreaValue.toInt(),
+          electricBill: _currentSliderElectricBillValue);
     } catch (e) {
       if (mounted) {
         showSnackBar(
@@ -38,6 +43,12 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     }
     return packages;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    packages = getPackages();
   }
 
   @override
@@ -94,14 +105,20 @@ class _HomeScreenState extends State<HomeScreen> {
                   });
                 },
               ),
-              CustomButton(text: 'Tìm kiếm', onTap: (){}),
+              CustomButton(
+                  text: 'Tìm kiếm',
+                  onTap: () {
+                    setState(() {
+                      packages = getPackages();
+                    });
+                  }),
               const SizedBox(
                 height: 16.0,
               ),
               FutureBuilder<List<Package>>(
-                future: getPackages(),
+                future: packages,
                 builder: (BuildContext build, AsyncSnapshot snapshot) {
-                  if (snapshot.data == null) {
+                  if (snapshot.connectionState != ConnectionState.done) {
                     return const Center(child: CircularProgressIndicator());
                   } else {
                     List<Package> packages = snapshot.data;
@@ -132,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
 Widget _buildImageSlider(String urlImage, int index) {
   return Container(
-    margin: EdgeInsets.symmetric(horizontal: 12),
+    margin: const EdgeInsets.symmetric(horizontal: 12),
     child: Image.network(
       urlImage,
       fit: BoxFit.cover,
@@ -143,13 +160,14 @@ Widget _buildImageSlider(String urlImage, int index) {
 Widget _buildRow(BuildContext context, Package item) {
   return InkWell(
     onTap: () {
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
           builder: (context) => PackageProductScreen(
             package: item,
           ),
         ),
+        (route) => false,
       );
     },
     child: Container(

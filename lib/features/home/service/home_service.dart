@@ -7,11 +7,17 @@ import 'package:mobile_solar_mp/constants/global_variables.dart';
 import 'package:mobile_solar_mp/models/package.dart';
 
 class HomeService {
-  Future<List<Package>> getPackages({required BuildContext context}) async {
+  Future<List<Package>> getPackages({
+    required BuildContext context,
+    required int roofArea,
+    required double electricBill,
+  }) async {
     List<Package> listPackage = [];
 
-    final response =
-        await HttpClient.http.get(Uri.parse('$uri/Package/get-Package'));
+    final response = await HttpClient.http.get(
+      Uri.parse(
+          '$uri/Package/sort?roofArea=$roofArea&electricBill=$electricBill'),
+    );
 
     if (context.mounted) {
       httpErrorHandle(

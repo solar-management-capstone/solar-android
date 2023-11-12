@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:mobile_solar_mp/config/providers/user_provider.dart';
 import 'package:mobile_solar_mp/constants/routes.dart';
 import 'package:mobile_solar_mp/features/edit_profile/screens/edit_profile_screen.dart';
+import 'package:mobile_solar_mp/features/history_construction_contract/screens/history_construction_contract.dart';
 import 'package:mobile_solar_mp/utils/shared_preferences.dart';
 import 'package:provider/provider.dart';
 
@@ -20,7 +23,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         Provider.of<UserProvider>(context, listen: false);
     if (userProvider.user.accountId == null) {
       String user = SharedPreferencesUtils.getUser().toString();
-      userProvider.setUser(user);
+      userProvider.setUser(json.decode(user));
     }
 
     void logout() async {
@@ -61,6 +64,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
               },
+            ),
+            ListTile(
+              leading: const Icon(Icons.password),
+              title: const Text(
+                'Thay đổi mật khẩu',
+              ),
+              trailing: const Icon(Icons.keyboard_arrow_right),
+              onTap: () {},
+            ),
+            const Divider(),
+            ListTile(
+              leading: const Icon(Icons.content_paste_search_sharp),
+              title: const Text(
+                'Lịch sử hợp đồng',
+              ),
+              trailing: const Icon(Icons.keyboard_arrow_right),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      const HistoryConstructionContractScreen(),
+                ),
+              ),
             ),
             const Divider(),
             Center(

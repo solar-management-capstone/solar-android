@@ -19,7 +19,8 @@ class PackageProduct {
     packageId = json['packageId'];
     status = json['status'];
     quantity = json['quantity'];
-    product = Product.fromJson(json['product']);
+    product =
+        json['product'] != null ? Product.fromJson(json['product']) : null;
   }
 
   Map<String, dynamic> toJson() {

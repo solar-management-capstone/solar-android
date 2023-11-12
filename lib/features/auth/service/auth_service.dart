@@ -102,7 +102,8 @@ class AuthService {
               Provider.of<UserProvider>(context, listen: false);
           final parseBodyToObject =
               json.decode(response.body); // convert String to Map
-          userProvider.setUser(json.encode(parseBodyToObject['user']));
+          // userProvider.setUser(json.encode(parseBodyToObject['user']));
+          userProvider.setUser(json.decode(response.body)['user']);
 
           final fullName = parseBodyToObject['user']['firstname'] +
               ' ' +

@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_solar_mp/features/auth/screens/auth_screen.dart';
+import 'package:mobile_solar_mp/features/construction_contract/screens/construction_contract_screen.dart';
+import 'package:mobile_solar_mp/features/construction_contract_detail/screens/construction_contract_detail_screen.dart';
+import 'package:mobile_solar_mp/features/construction_contract_detail/screens/web_view_container.dart';
 import 'package:mobile_solar_mp/features/edit_profile/screens/edit_profile_screen.dart';
+import 'package:mobile_solar_mp/features/history_construction_contract/screens/history_construction_contract.dart';
 import 'package:mobile_solar_mp/features/home/screens/home_screen.dart';
 import 'package:mobile_solar_mp/features/navigation_bar/navigation_bar_app.dart';
+import 'package:mobile_solar_mp/features/package/screens/filter_package_screen.dart';
 import 'package:mobile_solar_mp/features/package_product/screens/package_product_screen.dart';
 import 'package:mobile_solar_mp/features/profile/screens/profile_screen.dart';
 import 'package:mobile_solar_mp/features/verification/screens/verification_screen.dart';
@@ -23,6 +28,19 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(builder: (_) => const VerificationScreen());
     case PackageProductScreen.routeName:
       return MaterialPageRoute(builder: (_) => const PackageProductScreen());
+    case ConstructionContractScreen.routeName:
+      return MaterialPageRoute(
+          builder: (_) => const ConstructionContractScreen());
+    case ConstructionContractDetailScreen.routeName:
+      return MaterialPageRoute(
+          builder: (_) => const ConstructionContractDetailScreen());
+    case HistoryConstructionContractScreen.routeName:
+      return MaterialPageRoute(
+          builder: (_) => const HistoryConstructionContractScreen());
+    case FilterPackageScreen.routeName:
+      return MaterialPageRoute(builder: (_) => const FilterPackageScreen());
+    case WebViewContainer.routeName:
+      return MaterialPageRoute(builder: (_) => WebViewContainer());
     default:
       return MaterialPageRoute(
         builder: (_) => const Scaffold(

@@ -24,5 +24,5 @@ String formatCurrency(double value) {
 
 String formatDateTime(String value) {
   DateTime dateTime = DateTime.parse(value);
-  return DateFormat('hh:ms dd/MM/yyyy').format(dateTime);
+  return DateFormat('hh:mm dd/MM/yyyy').format(dateTime);
 }

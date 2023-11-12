@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile_solar_mp/common/widgets/custom_button.dart';
+//import 'package:mobile_solar_mp/common/widgets/custom_button.dart';
 import 'package:mobile_solar_mp/constants/routes.dart';
 import 'package:mobile_solar_mp/constants/utils.dart';
 import 'package:mobile_solar_mp/features/home/service/home_service.dart';
@@ -21,18 +21,15 @@ class _HomeScreenState extends State<HomeScreen> {
     "https://kenh14cdn.com/203336854389633024/2021/6/1/anh-chup-man-hinh-2021-06-01-luc-190139-16225506660211157797993-16225506948101621046346.png"
   ];
 
-  double _currentSliderRoofAreaValue = 0;
-  double _currentSliderElectricBillValue = 1000000;
+  // double _currentSliderRoofAreaValue = 0;
+  // double _currentSliderElectricBillValue = 1000000;
 
   late Future<List<Package>> packages = [] as Future<List<Package>>;
 
   Future<List<Package>> getPackages() async {
     List<Package> packages = [];
     try {
-      packages = await HomeService().getPackages(
-          context: context,
-          roofArea: _currentSliderRoofAreaValue.toInt(),
-          electricBill: _currentSliderElectricBillValue);
+      packages = await HomeService().getPackages(context: context);
     } catch (e) {
       if (mounted) {
         showSnackBar(
@@ -56,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Gói',
+          'Trang chủ',
         ),
         automaticallyImplyLeading: false,
       ),
@@ -73,48 +70,48 @@ class _HomeScreenState extends State<HomeScreen> {
                 options: CarouselOptions(height: 150, autoPlay: true),
               ),
               const SizedBox(height: 16.0),
-              Text(
-                'Diện tích mái nhà tối thiểu: ${_currentSliderRoofAreaValue.round().toString()} m2',
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-              Slider(
-                value: _currentSliderRoofAreaValue,
-                max: 200,
-                divisions: 10,
-                label: _currentSliderRoofAreaValue.round().toString(),
-                onChanged: (double value) {
-                  setState(() {
-                    _currentSliderRoofAreaValue = value;
-                  });
-                },
-              ),
-              const SizedBox(height: 16.0),
-              Text(
-                'Hoá đơn tiền điện trung bình hàng tháng: ${formatCurrency(_currentSliderElectricBillValue)}',
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-              Slider(
-                value: _currentSliderElectricBillValue,
-                max: 10000000,
-                divisions: 100000,
-                min: 100000,
-                label: formatCurrency(_currentSliderElectricBillValue),
-                onChanged: (double value) {
-                  setState(() {
-                    _currentSliderElectricBillValue = value;
-                  });
-                },
-              ),
-              CustomButton(
-                  text: 'Tìm kiếm',
-                  onTap: () {
-                    setState(() {
-                      packages = getPackages();
-                    });
-                  }),
-              const SizedBox(
-                height: 16.0,
-              ),
+              // Text(
+              //   'Diện tích mái nhà tối thiểu: ${_currentSliderRoofAreaValue.round().toString()} m2',
+              //   style: const TextStyle(fontWeight: FontWeight.bold),
+              // ),
+              // Slider(
+              //   value: _currentSliderRoofAreaValue,
+              //   max: 200,
+              //   divisions: 10,
+              //   label: _currentSliderRoofAreaValue.round().toString(),
+              //   onChanged: (double value) {
+              //     setState(() {
+              //       _currentSliderRoofAreaValue = value;
+              //     });
+              //   },
+              // ),
+              // const SizedBox(height: 16.0),
+              // Text(
+              //   'Hoá đơn tiền điện trung bình hàng tháng: ${formatCurrency(_currentSliderElectricBillValue)}',
+              //   style: const TextStyle(fontWeight: FontWeight.bold),
+              // ),
+              // Slider(
+              //   value: _currentSliderElectricBillValue,
+              //   max: 10000000,
+              //   divisions: 100000,
+              //   min: 100000,
+              //   label: formatCurrency(_currentSliderElectricBillValue),
+              //   onChanged: (double value) {
+              //     setState(() {
+              //       _currentSliderElectricBillValue = value;
+              //     });
+              //   },
+              // ),
+              // CustomButton(
+              //     text: 'Tìm kiếm',
+              //     onTap: () {
+              //       setState(() {
+              //         packages = getPackages();
+              //       });
+              //     }),
+              // const SizedBox(
+              //   height: 16.0,
+              // ),
               FutureBuilder<List<Package>>(
                 future: packages,
                 builder: (BuildContext build, AsyncSnapshot snapshot) {
@@ -165,6 +162,7 @@ Widget _buildRow(BuildContext context, Package item) {
         MaterialPageRoute(
           builder: (context) => PackageProductScreen(
             package: item,
+            index: 0,
           ),
         ),
         (route) => false,

@@ -37,8 +37,8 @@ class Package {
     roofArea = json['roofArea'];
     promotionId = json['promotionId'];
     status = json['status'];
-    packageProduct = List.from(json['packageProduct'])
-        .map((e) => PackageProduct.fromJson(e))
+    packageProduct = List?.from(json['packageProduct'])
+        .map((e) => PackageProduct?.fromJson(e))
         .toList();
     if (json['promotion'] != null) {
       promotion = Promotion?.fromJson(json['promotion']);

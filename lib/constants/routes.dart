@@ -7,4 +7,14 @@ class RoutePath {
   static const String profileRoute = '/profile';
   static const String verificationRoute = '/verification';
   static const String packageProductRoute = '/packageProduct';
+  static const String constructionContractRoute = '/constructionContract';
+  static const String packageRoute = '/package';
+  static const String constructionContractDetailRoute =
+      '/constructionContractDetail';
+  static const String historyConstructionContractRoute =
+      '/historyConstructionContract';
+  static const String filterPackageRoute =
+      '/filterPackageContract';
+  static const String webViewContainerRoute =
+      '/webViewContainer';
 }

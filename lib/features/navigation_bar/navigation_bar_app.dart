@@ -3,6 +3,7 @@ import 'package:mobile_solar_mp/constants/app_color.dart';
 import 'package:mobile_solar_mp/constants/routes.dart';
 import 'package:mobile_solar_mp/features/construction_contract/screens/construction_contract_screen.dart';
 import 'package:mobile_solar_mp/features/home/screens/home_screen.dart';
+import 'package:mobile_solar_mp/features/package/screens/package_screen.dart';
 import 'package:mobile_solar_mp/features/profile/screens/profile_screen.dart';
 
 class NavigationBarApp extends StatefulWidget {
@@ -43,6 +44,10 @@ class _NavigationBarAppState extends State<NavigationBarApp> {
             label: 'Trang chủ',
           ),
           BottomNavigationBarItem(
+            icon: Icon(Icons.inventory_2_outlined),
+            label: 'Gói',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.content_paste_search_sharp),
             label: 'Hợp đồng',
           ),
@@ -58,15 +63,16 @@ class _NavigationBarAppState extends State<NavigationBarApp> {
         currentIndex: _currentPageIndex,
         onTap: _onItemTapped,
       ),
-      body: const [
-        HomeScreen(),
-        ConstructionContractScreen(),
-        SafeArea(
+      body:  [
+        const HomeScreen(),
+        PackageScreen(),
+        const ConstructionContractScreen(),
+        const SafeArea(
           child: Center(
             child: Text('Chat'),
           ),
         ),
-        ProfileScreen(),
+        const ProfileScreen(),
       ][_currentPageIndex],
     );
   }

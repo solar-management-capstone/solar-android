@@ -6,7 +6,7 @@ import 'package:mobile_solar_mp/constants/routes.dart';
 import 'package:mobile_solar_mp/constants/utils.dart';
 import 'package:mobile_solar_mp/features/edit_profile/service/edit_profile_service.dart';
 import 'package:mobile_solar_mp/features/navigation_bar/navigation_bar_app.dart';
-import 'package:mobile_solar_mp/models/user.dart';
+import 'package:mobile_solar_mp/models/account.dart';
 
 class EditProfileScreen extends StatefulWidget {
   static const String routeName = RoutePath.editProfileRoute;
@@ -28,10 +28,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   String _gender = 'true';
   bool _isLoading = false;
 
-  late Future<User> _dataFuture;
+  late Future<Account> _dataFuture;
 
-  Future<User> getUser() async {
-    User user = User();
+  Future<Account> getUser() async {
+    Account user = Account();
     try {
       user = await EditProfileService().getUser();
       _firstName.text = user.firstname!;
@@ -90,7 +90,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       if (mounted) {
         showSnackBar(
           context,
-          'Cập nhật không thành công',
+          // 'Cập nhật không thành công',
+          e.toString(),
           color: Colors.red,
         );
       }
@@ -110,7 +111,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               context,
               MaterialPageRoute(
                 builder: (context) => NavigationBarApp(
-                  pageIndex: 3,
+                  pageIndex: 4,
                 ),
               ),
               (route) => false),
@@ -121,7 +122,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: FutureBuilder<User>(
+        child: FutureBuilder<Account>(
           future: _dataFuture,
           builder: (BuildContext build, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {

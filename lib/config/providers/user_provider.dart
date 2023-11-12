@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_solar_mp/models/user.dart';
+import 'package:mobile_solar_mp/models/account.dart';
 
 class UserProvider extends ChangeNotifier {
-  User _user = User();
+  Account _user = Account();
 
-  User get user => _user;
+  Account get user => _user;
 
-  void setUser(String user) {
-    _user = User.fromJson(user);
+  void setUser(Map<String, dynamic> user) {
+    _user = Account.fromJson(user);
     notifyListeners();
   }
 }

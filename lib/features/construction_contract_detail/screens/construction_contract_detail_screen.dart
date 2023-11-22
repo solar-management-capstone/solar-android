@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:full_screen_image/full_screen_image.dart';
 import 'package:mobile_solar_mp/common/handle_exception/bad_request_exception.dart';
-import 'package:mobile_solar_mp/common/widgets/custom_button.dart';
 import 'package:mobile_solar_mp/constants/routes.dart';
 import 'package:mobile_solar_mp/constants/utils.dart';
 import 'package:mobile_solar_mp/features/construction_contract_detail/screens/web_view_container.dart';
@@ -10,7 +10,6 @@ import 'package:mobile_solar_mp/features/navigation_bar/navigation_bar_app.dart'
 import 'package:mobile_solar_mp/models/construction_contract.dart';
 import 'package:mobile_solar_mp/models/payment.dart';
 import 'package:mobile_solar_mp/utils/shared_preferences.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 class ConstructionContractDetailScreen extends StatefulWidget {
   static const String routeName = RoutePath.constructionContractDetailRoute;
@@ -123,6 +122,47 @@ class ConstructionContractDetailScreenState
     }
   }
 
+  void _handleCancelConstructionContract(String constructionContractId) async {
+    try {
+      await ConstructionContractDetailService().cancelConstructionContract(
+        context: context,
+        constructionContractId: constructionContractId,
+      );
+      if (mounted) {
+        showSnackBar(
+          context,
+          'Huỷ hợp đồng thành công',
+        );
+
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (_) => NavigationBarApp(
+              pageIndex: 2,
+            ),
+          ),
+          (route) => false,
+        );
+      }
+    } on CustomException catch (e) {
+      if (mounted) {
+        showSnackBar(
+          context,
+          e.cause,
+          color: Colors.red,
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        showSnackBar(
+          context,
+          e.toString(),
+          color: Colors.red,
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     ConstructionContract constructionContract = widget.constructionContract!;
@@ -145,11 +185,11 @@ class ConstructionContractDetailScreenState
         ),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Expanded(
+      body: Column(
+        children: [
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -280,6 +320,77 @@ class ConstructionContractDetailScreenState
                         ],
                       ),
                     ),
+                    if (constructionContract.paymentProcess?.length != null &&
+                        constructionContract.paymentProcess!.isNotEmpty)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Quá trình thanh toán:',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          _buildPaymentProcess(constructionContract),
+                        ],
+                      ),
+                    if (constructionContract.imageFile != null)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Hình ảnh hợp đồng:',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            height: 100.0,
+                            child: FullScreenWidget(
+                              disposeLevel: DisposeLevel.High,
+                              child: Center(
+                                child: Hero(
+                                  tag: {constructionContract.imageFile},
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(16.0),
+                                    child: Image.network(
+                                      constructionContract.imageFile!,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    if (constructionContract.status == '3')
+                      Wrap(
+                        children: [
+                          const SizedBox(
+                            height: 8.0,
+                          ),
+                          const Text(
+                            'Nghiệm thu:',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    const Text('Mô tả đánh giá: '),
+                                    Text(constructionContract
+                                            .acceptance?[0].feedback ??
+                                        ''),
+                                  ],
+                                ),
+                                _buildQuantityIconStar(
+                                  constructionContract.acceptance![0].rating!,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     const SizedBox(
                       height: 8.0,
                     ),
@@ -290,41 +401,83 @@ class ConstructionContractDetailScreenState
                 ),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                ElevatedButton(
-                  onPressed: () => _handlePayment(
-                    amount: constructionContract.totalcost!,
-                    constructionContractId:
-                        constructionContract.constructioncontractId!,
-                  ),
-                  style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(150, 50),
-                      backgroundColor: Colors.white),
-                  child: const Text(
-                    'Thanh toán',
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
+          ),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+          //   children: [
+          //     ElevatedButton(
+          //       onPressed: () => _handlePayment(
+          //         amount: constructionContract.totalcost!,
+          //         constructionContractId:
+          //             constructionContract.constructioncontractId!,
+          //       ),
+          //       style: ElevatedButton.styleFrom(
+          //           minimumSize: const Size(150, 50),
+          //           backgroundColor: Colors.white),
+          //       child: const Text(
+          //         'Thanh toán',
+          //         style: TextStyle(
+          //           color: Colors.black,
+          //         ),
+          //       ),
+          //     ),
+          //     ElevatedButton(
+          //       onPressed: () {},
+          //       style: ElevatedButton.styleFrom(
+          //         minimumSize: const Size(150, 50),
+          //       ),
+          //       child: const Text(
+          //         'Huỷ hợp đồng',
+          //         style: TextStyle(
+          //           color: Colors.white,
+          //         ),
+          //       ),
+          //     ),
+          //   ],
+          // )
+
+          if (constructionContract.status == '1')
+            Container(
+              padding: const EdgeInsets.all(8.0),
+              color: Colors.white,
+              child: ElevatedButton(
+                onPressed: () => _handleCancelConstructionContract(
+                  constructionContract.constructioncontractId!,
+                ),
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size(double.infinity, 50),
+                ),
+                child: const Text(
+                  'Huỷ hợp đồng',
+                  style: TextStyle(
+                    color: Colors.white,
                   ),
                 ),
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(150, 50),
-                  ),
-                  child: const Text(
-                    'Huỷ hợp đồng',
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
+              ),
+            ),
+
+          if (constructionContract.status == '2')
+            Container(
+              padding: const EdgeInsets.all(8.0),
+              color: Colors.white,
+              child: ElevatedButton(
+                onPressed: () => _handlePayment(
+                  amount: constructionContract.totalcost!,
+                  constructionContractId:
+                      constructionContract.constructioncontractId!,
+                ),
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size(double.infinity, 50),
+                ),
+                child: const Text(
+                  'Thanh toán',
+                  style: TextStyle(
+                    color: Colors.white,
                   ),
                 ),
-              ],
-            )
-          ],
-        ),
+              ),
+            ),
+        ],
       ),
     );
   }
@@ -407,3 +560,49 @@ class ConstructionContractDetailScreenState
 //     ],
 //   );
 // }
+
+Widget _buildPaymentProcess(ConstructionContract constructionContract) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+    child: ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      itemCount: constructionContract.paymentProcess?.length,
+      itemBuilder: (BuildContext context, int index) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Text(
+                    'Ngày: ${formatDateTime(constructionContract.paymentProcess![index].createAt!)}'),
+                const Text(' Số tiền: '),
+                Text(
+                  formatCurrency(
+                    constructionContract.paymentProcess![index].amount!,
+                  ),
+                  style: const TextStyle(color: Colors.red),
+                )
+              ],
+            ),
+          ],
+        );
+      },
+    ),
+  );
+}
+
+Widget _buildQuantityIconStar(int length) {
+  List<Widget> icons = List.generate(
+    length,
+    (index) => const Icon(
+      Icons.star,
+      color: Colors.amber,
+    ),
+  );
+
+  return Row(
+    children: icons,
+  );
+}

@@ -4,6 +4,7 @@ import 'package:mobile_solar_mp/features/construction_contract/screens/construct
 import 'package:mobile_solar_mp/features/construction_contract_detail/screens/construction_contract_detail_screen.dart';
 import 'package:mobile_solar_mp/features/construction_contract_detail/screens/web_view_container.dart';
 import 'package:mobile_solar_mp/features/edit_profile/screens/edit_profile_screen.dart';
+import 'package:mobile_solar_mp/features/history_construction_contract/screens/feedback_screen.dart';
 import 'package:mobile_solar_mp/features/history_construction_contract/screens/history_construction_contract.dart';
 import 'package:mobile_solar_mp/features/home/screens/home_screen.dart';
 import 'package:mobile_solar_mp/features/navigation_bar/navigation_bar_app.dart';
@@ -41,6 +42,8 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(builder: (_) => const FilterPackageScreen());
     case WebViewContainer.routeName:
       return MaterialPageRoute(builder: (_) => WebViewContainer());
+    case FeedbackScreen.routeName:
+      return MaterialPageRoute(builder: (_) => const FeedbackScreen());
     default:
       return MaterialPageRoute(
         builder: (_) => const Scaffold(

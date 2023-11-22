@@ -128,11 +128,11 @@ class _PackageProductScreenState extends State<PackageProductScreen> {
         ),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Expanded(
+      body: Column(
+        children: [
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -218,7 +218,7 @@ class _PackageProductScreenState extends State<PackageProductScreen> {
                       },
                     ),
                     const SizedBox(height: 10.0),
-                    const Text('ĐÁNH GIÁ SẢN PHẨM'),
+                    const Text('ĐÁNH GIÁ GÓI'),
                     const SizedBox(height: 10.0),
                     FutureBuilder<List<feedback_model.Feedback>>(
                       future: feedbacks,
@@ -248,13 +248,42 @@ class _PackageProductScreenState extends State<PackageProductScreen> {
                 ),
               ),
             ),
-            CustomButton(
-              text: 'Yêu cầu tư vấn',
-              // onTap: () => _openModal(context),
-              onTap: () => _handleSendRequest(''),
-            )
-          ],
-        ),
+          ),
+          Container(
+            color: Colors.white,
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  onPressed: () => _handleSendRequest(''),
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(150, 50),
+                    backgroundColor: Colors.white,
+                  ),
+                  child: const Text(
+                    'Nhắn tin',
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: (){},
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(200, 50),
+                  ),
+                  child: const Text(
+                    'Gửi yêu cầu tư vấn',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
       ),
     );
   }
@@ -319,7 +348,8 @@ class _PackageProductScreenState extends State<PackageProductScreen> {
             children: [
               Text(
                 '${feedback.account!.username}',
-                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               Text('${feedback.description}'),
             ],

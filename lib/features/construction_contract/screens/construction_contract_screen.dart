@@ -22,7 +22,7 @@ class _ConstructionContractScreenState extends State<ConstructionContractScreen>
 
   late TabController _tabController;
 
-  List<Widget> listTab = [
+  List<Widget> listTab = const[
     Tab(text: 'Hoạt động'),
     Tab(text: 'Đang duyệt'),
   ];
@@ -228,7 +228,7 @@ Widget _buildContract(
               ),
               Row(
                 children: [
-                  Text(
+                  const Text(
                     'Trạng thái: ',
                   ),
                   constructionContract.status == '2'

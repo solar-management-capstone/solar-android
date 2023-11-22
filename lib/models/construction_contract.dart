@@ -1,5 +1,7 @@
+import 'package:mobile_solar_mp/models/acceptance.dart';
 import 'package:mobile_solar_mp/models/bracket.dart';
 import 'package:mobile_solar_mp/models/package.dart';
+import 'package:mobile_solar_mp/models/payment_process.dart';
 import 'package:mobile_solar_mp/models/staff.dart';
 
 class ConstructionContract {
@@ -18,9 +20,9 @@ class ConstructionContract {
   // Customer? customer;
   Package? package;
   Staff? staff;
-  // List<Null>? acceptance;
+  List<Acceptance>? acceptance;
   // List<Null>? feedback;
-  // List<PaymentProcess>? paymentProcess;
+  List<PaymentProcess>? paymentProcess;
   // List<Process>? process;
   // List<WarrantyReport>? warrantyReport;
 
@@ -67,24 +69,24 @@ class ConstructionContract {
     package =
         json['package'] != null ? Package.fromJson(json['package']) : null;
     staff = json['staff'] != null ? Staff.fromJson(json['staff']) : null;
-    // if (json['acceptance'] != null) {
-    //   acceptance = <Null>[];
-    //   json['acceptance'].forEach((v) {
-    //     acceptance!.add(new Null.fromJson(v));
-    //   });
-    // }
+    if (json['acceptance'] != null) {
+      acceptance = <Acceptance>[];
+      json['acceptance'].forEach((v) {
+        acceptance!.add(Acceptance.fromJson(v));
+      });
+    }
     // if (json['feedback'] != null) {
     //   feedback = <Null>[];
     //   json['feedback'].forEach((v) {
     //     feedback!.add(new Null.fromJson(v));
     //   });
     // }
-    // if (json['paymentProcess'] != null) {
-    //   paymentProcess = <PaymentProcess>[];
-    //   json['paymentProcess'].forEach((v) {
-    //     paymentProcess!.add(new PaymentProcess.fromJson(v));
-    //   });
-    // }
+    if (json['paymentProcess'] != null) {
+      paymentProcess = <PaymentProcess>[];
+      json['paymentProcess'].forEach((v) {
+        paymentProcess!.add(PaymentProcess.fromJson(v));
+      });
+    }
     // if (json['process'] != null) {
     //   process = <Process>[];
     //   json['process'].forEach((v) {
@@ -124,16 +126,15 @@ class ConstructionContract {
     if (staff != null) {
       data['staff'] = staff?.toJson();
     }
-    // if (acceptance != null) {
-    //   data['acceptance'] = acceptance!.map((v) => v.toJson()).toList();
-    // }
+    if (acceptance != null) {
+      data['acceptance'] = acceptance?.map((v) => v.toJson()).toList();
+    }
     // if (feedback != null) {
     //   data['feedback'] = feedback!.map((v) => v.toJson()).toList();
     // }
-    // if (paymentProcess != null) {
-    //   data['paymentProcess'] =
-    //       paymentProcess!.map((v) => v.toJson()).toList();
-    // }
+    if (paymentProcess != null) {
+      data['paymentProcess'] = paymentProcess?.map((v) => v.toJson()).toList();
+    }
     // if (process != null) {
     //   data['process'] = process!.map((v) => v.toJson()).toList();
     // }

@@ -3,6 +3,7 @@ import 'package:mobile_solar_mp/common/handle_exception/bad_request_exception.da
 import 'package:mobile_solar_mp/constants/routes.dart';
 import 'package:mobile_solar_mp/constants/utils.dart';
 import 'package:mobile_solar_mp/features/construction_contract_detail/screens/construction_contract_detail_screen.dart';
+import 'package:mobile_solar_mp/features/history_construction_contract/screens/feedback_screen.dart';
 import 'package:mobile_solar_mp/features/history_construction_contract/service/history_construction_contract_service.dart';
 import 'package:mobile_solar_mp/features/navigation_bar/navigation_bar_app.dart';
 import 'package:mobile_solar_mp/models/construction_contract.dart';
@@ -24,7 +25,7 @@ class _HistoryConstructionContractScreenState
 
   late TabController _tabController;
 
-  List<Widget> listTab = [
+  List<Widget> listTab = const [
     Tab(text: 'Hoàn thành'),
     Tab(text: 'Đã Huỷ'),
   ];
@@ -35,7 +36,7 @@ class _HistoryConstructionContractScreenState
     List<ConstructionContract> listConstructionContract = [];
     try {
       listConstructionContract = await HistoryConstructionContractService()
-          .getConstructionContract(context: context, status: status);
+          .getConstructionContractByStatus(context: context, status: status);
     } on CustomException catch (e) {
       if (mounted) {
         showSnackBar(
@@ -177,7 +178,7 @@ Widget _buildContract(
     child: Container(
       padding: const EdgeInsets.all(8.0),
       margin: const EdgeInsets.only(bottom: 8.0),
-      height: 120.0,
+      height: 125.0,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: const BorderRadius.all(Radius.circular(8.0)),
@@ -191,26 +192,27 @@ Widget _buildContract(
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            'Tên nhân viên: ${constructionContract.staff?.firstname} ${constructionContract.staff?.lastname}',
-          ),
-          Text(
-            constructionContract.bracket!.name!.length > 40
-                ? 'Khung đỡ: ${constructionContract.bracket!.name!.substring(0, 40)}...'
-                : 'Khung đỡ: ${constructionContract.bracket?.name}',
-          ),
-          Text(
-            constructionContract.package!.name!.length > 40
-                ? 'Gói: ${constructionContract.package!.name!.substring(0, 40)}...'
-                : 'Gói: ${constructionContract.package?.name}',
-          ),
-          Text(
-            'Tổng số tiền: ${formatCurrency(constructionContract.totalcost!)}',
-          ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Text(
+                'Tên nhân viên: ${constructionContract.staff?.firstname} ${constructionContract.staff?.lastname}',
+              ),
+              Text(
+                constructionContract.bracket!.name!.length > 40
+                    ? 'Khung đỡ: ${constructionContract.bracket!.name!.substring(0, 40)}...'
+                    : 'Khung đỡ: ${constructionContract.bracket?.name}',
+              ),
+              Text(
+                constructionContract.package!.name!.length > 40
+                    ? 'Gói: ${constructionContract.package!.name!.substring(0, 40)}...'
+                    : 'Gói: ${constructionContract.package?.name}',
+              ),
+              Text(
+                'Tổng số tiền: ${formatCurrency(constructionContract.totalcost!)}',
+              ),
               Row(
                 children: [
                   Text(
@@ -222,6 +224,11 @@ Widget _buildContract(
                   ),
                 ],
               ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
               Row(
                 children: [
                   const Text(
@@ -236,7 +243,31 @@ Widget _buildContract(
                         : const TextStyle(color: Colors.green),
                   ),
                 ],
-              )
+              ),
+              // status = 3: hoàn thành
+              constructionContract.status == '3'
+                  ? ElevatedButton(
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => FeedbackScreen(
+                            constructionContract: constructionContract,
+                          ),
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(20, 20),
+                        backgroundColor: Colors.white,
+                        side: const BorderSide(color: Colors.red),
+                        shadowColor: Colors.grey,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                      child: const Text(
+                        'Đánh giá',
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    )
+                  : const SizedBox(),
             ],
           ),
         ],

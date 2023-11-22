@@ -44,6 +44,7 @@ dependencies:
   full_screen_image: ^2.0.0
   carousel_slider: ^4.2.1
   webview_flutter: ^4.4.2
+  flutter_rating_bar: ^4.0.1
 
 dev_dependencies:
   flutter_test:

@@ -8,7 +8,7 @@ import 'package:mobile_solar_mp/models/construction_contract.dart';
 import 'package:mobile_solar_mp/utils/shared_preferences.dart';
 
 class HistoryConstructionContractService {
-  Future<List<ConstructionContract>> getConstructionContract({
+  Future<List<ConstructionContract>> getConstructionContractByStatus({
     required BuildContext context,
     required int status,
   }) async {
@@ -35,6 +35,38 @@ class HistoryConstructionContractService {
             }
           }
         },
+      );
+    }
+
+    return listConstructionContract;
+  }
+
+  Future<List<ConstructionContract>> createFeedback({
+    required BuildContext context,
+    required double rating,
+    required String feedbackDescription,
+    required String contructionContractId,
+    required String packageId,
+  }) async {
+    List<ConstructionContract> listConstructionContract = [];
+    String customerId = SharedPreferencesUtils.getId()!;
+    final response = await HttpClient.http.post(
+        Uri.parse(
+          '$uri/Feedback/Insert-feedback',
+        ),
+        body: json.encode({
+          'description': feedbackDescription,
+          'contructionContractId': contructionContractId,
+          'accountId': customerId,
+          'packageId': packageId,
+          'rating': rating.toInt(),
+        }));
+
+    if (context.mounted) {
+      httpErrorHandle(
+        response: response,
+        context: context,
+        onSuccess: () {},
       );
     }
 

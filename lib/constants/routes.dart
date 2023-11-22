@@ -13,8 +13,7 @@ class RoutePath {
       '/constructionContractDetail';
   static const String historyConstructionContractRoute =
       '/historyConstructionContract';
-  static const String filterPackageRoute =
-      '/filterPackageContract';
-  static const String webViewContainerRoute =
-      '/webViewContainer';
+  static const String filterPackageRoute = '/filterPackageContract';
+  static const String webViewContainerRoute = '/webViewContainer';
+  static const String feedbackRoute = '/feedback';
 }

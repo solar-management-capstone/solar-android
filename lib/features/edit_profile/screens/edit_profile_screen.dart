@@ -121,7 +121,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         centerTitle: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
         child: FutureBuilder<Account>(
           future: _dataFuture,
           builder: (BuildContext build, AsyncSnapshot snapshot) {

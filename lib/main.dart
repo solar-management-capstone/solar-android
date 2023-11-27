@@ -1,9 +1,11 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_solar_mp/config/providers/filter_package_provider.dart';
+import 'package:mobile_solar_mp/config/providers/firebase_provider.dart';
 import 'package:mobile_solar_mp/config/providers/user_provider.dart';
 import 'package:mobile_solar_mp/config/routes/router.dart';
 import 'package:mobile_solar_mp/constants/routes.dart';
-import 'package:mobile_solar_mp/models/filter_package.dart';
 import 'package:mobile_solar_mp/utils/app_theme.dart';
 import 'package:mobile_solar_mp/utils/shared_preferences.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +16,10 @@ void main() async {
 
   // initial SharedPreferences instance
   await SharedPreferencesUtils.init();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -34,6 +40,9 @@ class _MyAppState extends State<MyApp> {
         ),
         ChangeNotifierProvider<FilterPackageProvider>(
           create: (_) => FilterPackageProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => FirebaseProvider(),
         ),
       ],
       child: MaterialApp(

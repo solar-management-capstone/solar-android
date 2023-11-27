@@ -16,4 +16,6 @@ class RoutePath {
   static const String filterPackageRoute = '/filterPackageContract';
   static const String webViewContainerRoute = '/webViewContainer';
   static const String feedbackRoute = '/feedback';
+  static const String chatRoute = '/chat';
+  static const String chatDetailRoute = '/chatDetail';
 }

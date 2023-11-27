@@ -22,9 +22,9 @@ class _ConstructionContractScreenState extends State<ConstructionContractScreen>
 
   late TabController _tabController;
 
-  List<Widget> listTab = const[
-    Tab(text: 'Hoạt động'),
-    Tab(text: 'Đang duyệt'),
+  List<Widget> listTab = const [
+    Tab(text: 'Thông tin'),
+    Tab(text: 'Đã huỷ'),
   ];
 
   Future<List<ConstructionContract>> getConstructionContractByStatus(
@@ -79,7 +79,7 @@ class _ConstructionContractScreenState extends State<ConstructionContractScreen>
                 if (index == 0) {
                   status = 2;
                 } else if (index == 1) {
-                  status = 1;
+                  status = 0;
                 }
                 listConstructionContract =
                     getConstructionContractByStatus(status: status);
@@ -231,15 +231,30 @@ Widget _buildContract(
                   const Text(
                     'Trạng thái: ',
                   ),
+                  constructionContract.status == '0'
+                      ? const Text(
+                          'Đã huỷ',
+                          style: TextStyle(color: Colors.red),
+                        )
+                      : const SizedBox(),
+                  constructionContract.status == '1'
+                      ? const Text(
+                          'Chờ duyệt',
+                          style: TextStyle(color: Colors.green),
+                        )
+                      : const SizedBox(),
                   constructionContract.status == '2'
                       ? const Text(
                           'Hoạt động',
-                          style: TextStyle(color: Colors.green),
-                        )
-                      : const Text(
-                          'Chờ duyệt',
                           style: TextStyle(color: Colors.blue),
                         )
+                      : const SizedBox(),
+                  constructionContract.status == '3'
+                      ? const Text(
+                          'Hoàn thành',
+                          style: TextStyle(color: Colors.amber),
+                        )
+                      : const SizedBox()
                 ],
               )
             ],

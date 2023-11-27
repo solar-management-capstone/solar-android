@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_solar_mp/constants/app_color.dart';
 import 'package:mobile_solar_mp/constants/routes.dart';
+import 'package:mobile_solar_mp/features/chat/screens/chat_detail_screen.dart';
+import 'package:mobile_solar_mp/features/chat/screens/chat_screen.dart';
 import 'package:mobile_solar_mp/features/construction_contract/screens/construction_contract_screen.dart';
 import 'package:mobile_solar_mp/features/home/screens/home_screen.dart';
 import 'package:mobile_solar_mp/features/package/screens/package_screen.dart';
@@ -65,13 +67,9 @@ class _NavigationBarAppState extends State<NavigationBarApp> {
       ),
       body:  [
         const HomeScreen(),
-        PackageScreen(),
+        const PackageScreen(),
         const ConstructionContractScreen(),
-        const SafeArea(
-          child: Center(
-            child: Text('Chat'),
-          ),
-        ),
+        const ChatDetailScreen(),
         const ProfileScreen(),
       ][_currentPageIndex],
     );

@@ -113,6 +113,8 @@ class AuthService {
               json.encode(parseBodyToObject['user']));
           await SharedPreferencesUtils.setId(
               parseBodyToObject['user']['accountId']);
+          await SharedPreferencesUtils.setPhoneNumber(
+              parseBodyToObject['user']['phone']);
           await SharedPreferencesUtils.setAccessToken(
               parseBodyToObject['token']);
         },

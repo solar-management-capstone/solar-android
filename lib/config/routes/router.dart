@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_solar_mp/features/auth/screens/auth_screen.dart';
+import 'package:mobile_solar_mp/features/chat/screens/chat_detail_screen.dart';
+import 'package:mobile_solar_mp/features/chat/screens/chat_screen.dart';
 import 'package:mobile_solar_mp/features/construction_contract/screens/construction_contract_screen.dart';
 import 'package:mobile_solar_mp/features/construction_contract_detail/screens/construction_contract_detail_screen.dart';
 import 'package:mobile_solar_mp/features/construction_contract_detail/screens/web_view_container.dart';
@@ -44,6 +46,10 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(builder: (_) => WebViewContainer());
     case FeedbackScreen.routeName:
       return MaterialPageRoute(builder: (_) => const FeedbackScreen());
+    case ChatScreen.routeName:
+      return MaterialPageRoute(builder: (_) => const ChatScreen());
+    case ChatDetailScreen.routeName:
+      return MaterialPageRoute(builder: (_) => const ChatDetailScreen());
     default:
       return MaterialPageRoute(
         builder: (_) => const Scaffold(

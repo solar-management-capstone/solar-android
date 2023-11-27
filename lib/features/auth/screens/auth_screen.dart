@@ -221,6 +221,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
           CustomTextField(
             controller: _usernameController,
             hintText: 'Số điện thoại',
+            keyboardType: TextInputType.phone,
           ),
           const SizedBox(
             height: 20.0,
@@ -315,6 +316,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
               CustomTextField(
                 controller: _usernameController,
                 hintText: 'Số điện thoại',
+                keyboardType: TextInputType.phone,
               ),
               const SizedBox(
                 height: 20.0,

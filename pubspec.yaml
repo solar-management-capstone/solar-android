@@ -45,6 +45,10 @@ dependencies:
   carousel_slider: ^4.2.1
   webview_flutter: ^4.4.2
   flutter_rating_bar: ^4.0.1
+  cloud_firestore: ^4.13.2
+  firebase_core: ^2.23.0
+  firebase_auth: ^4.14.1
+  firebase_storage: ^11.5.2
 
 dev_dependencies:
   flutter_test:

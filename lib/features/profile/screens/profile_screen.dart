@@ -73,21 +73,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
               trailing: const Icon(Icons.keyboard_arrow_right),
               onTap: () {},
             ),
-            const Divider(),
-            ListTile(
-              leading: const Icon(Icons.content_paste_search_sharp),
-              title: const Text(
-                'Lịch sử hợp đồng',
-              ),
-              trailing: const Icon(Icons.keyboard_arrow_right),
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      const HistoryConstructionContractScreen(),
-                ),
-              ),
-            ),
+            // const Divider(),
+            // ListTile(
+            //   leading: const Icon(Icons.content_paste_search_sharp),
+            //   title: const Text(
+            //     'Lịch sử hợp đồng',
+            //   ),
+            //   trailing: const Icon(Icons.keyboard_arrow_right),
+            //   onTap: () => Navigator.push(
+            //     context,
+            //     MaterialPageRoute(
+            //       builder: (context) =>
+            //           const HistoryConstructionContractScreen(),
+            //     ),
+            //   ),
+            // ),
             const Divider(),
             Center(
               child: ElevatedButton(

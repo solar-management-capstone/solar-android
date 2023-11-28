@@ -24,8 +24,10 @@ class VerificationService {
     }
   }
 
-  Future<void> resendOTP(
-      {required BuildContext context, required String phoneNumber}) async {
+  Future<void> resendOTP({
+    required BuildContext context,
+    required String phoneNumber,
+  }) async {
     final response = await HttpClient.http.post(
       Uri.parse('$uri/Twilio/sendOtp'),
       body: json.encode({'phoneNumber': phoneNumber}),

@@ -6,7 +6,6 @@ import 'package:mobile_solar_mp/constants/app_color.dart';
 import 'package:mobile_solar_mp/constants/routes.dart';
 import 'package:mobile_solar_mp/constants/utils.dart';
 import 'package:mobile_solar_mp/features/chat/service/chat_service.dart';
-import 'package:mobile_solar_mp/features/navigation_bar/navigation_bar_app.dart';
 import 'package:mobile_solar_mp/utils/shared_preferences.dart';
 import 'package:provider/provider.dart';
 
@@ -46,7 +45,7 @@ class ChatDetailScreenState extends State<ChatDetailScreen>
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Nhắn tin với quản lý',
+          'Tin nhắn',
           style: TextStyle(color: Colors.black),
         ),
         automaticallyImplyLeading: false,

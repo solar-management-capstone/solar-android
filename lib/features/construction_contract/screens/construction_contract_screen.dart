@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_solar_mp/common/handle_exception/bad_request_exception.dart';
 import 'package:mobile_solar_mp/constants/routes.dart';
 import 'package:mobile_solar_mp/constants/utils.dart';
+import 'package:mobile_solar_mp/features/construction_contract/screens/feedback_screen.dart';
 import 'package:mobile_solar_mp/features/construction_contract/service/construction_contract_service.dart';
 import 'package:mobile_solar_mp/features/construction_contract_detail/screens/construction_contract_detail_screen.dart';
 import 'package:mobile_solar_mp/models/construction_contract.dart';
@@ -227,34 +228,62 @@ Widget _buildContract(
                 ],
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    'Trạng thái: ',
+                  Row(
+                    children: [
+                      const Text(
+                        'Trạng thái: ',
+                      ),
+                      constructionContract.status == '0'
+                          ? const Text(
+                              'Đã huỷ',
+                              style: TextStyle(color: Colors.red),
+                            )
+                          : const SizedBox(),
+                      constructionContract.status == '1'
+                          ? const Text(
+                              'Chờ duyệt',
+                              style: TextStyle(color: Colors.green),
+                            )
+                          : const SizedBox(),
+                      constructionContract.status == '2'
+                          ? const Text(
+                              'Hoạt động',
+                              style: TextStyle(color: Colors.blue),
+                            )
+                          : const SizedBox(),
+                      constructionContract.status == '3'
+                          ? const Text(
+                              'Hoàn thành',
+                              style: TextStyle(color: Colors.deepPurple),
+                            )
+                          : const SizedBox()
+                    ],
                   ),
-                  constructionContract.status == '0'
-                      ? const Text(
-                          'Đã huỷ',
-                          style: TextStyle(color: Colors.red),
-                        )
-                      : const SizedBox(),
-                  constructionContract.status == '1'
-                      ? const Text(
-                          'Chờ duyệt',
-                          style: TextStyle(color: Colors.green),
-                        )
-                      : const SizedBox(),
-                  constructionContract.status == '2'
-                      ? const Text(
-                          'Hoạt động',
-                          style: TextStyle(color: Colors.blue),
-                        )
-                      : const SizedBox(),
                   constructionContract.status == '3'
-                      ? const Text(
-                          'Hoàn thành',
-                          style: TextStyle(color: Colors.amber),
+                      ? ElevatedButton(
+                          onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => FeedbackScreen(
+                                constructionContract: constructionContract,
+                              ),
+                            ),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: const Size(20, 20),
+                            backgroundColor: Colors.white,
+                            side: const BorderSide(color: Colors.red),
+                            shadowColor: Colors.grey,
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          ),
+                          child: const Text(
+                            'Đánh giá',
+                            style: TextStyle(color: Colors.red),
+                          ),
                         )
-                      : const SizedBox()
+                      : const SizedBox(),
                 ],
               )
             ],

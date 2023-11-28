@@ -193,9 +193,15 @@ Widget _buildRow(BuildContext context, Package item) {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              item.presentImage != null
-                  ? Image.network(item.presentImage!, width: 100.0,)
-                  : const SizedBox(),
+              Align(
+                alignment: Alignment.center,
+                child: item.presentImage != null
+                    ? Image.network(
+                        item.presentImage!,
+                        height: 60.0,
+                      )
+                    : const SizedBox(),
+              ),
               Text(
                 item.name!.length > 50
                     ? '${item.name!.substring(0, 50)}...'
@@ -205,12 +211,12 @@ Widget _buildRow(BuildContext context, Package item) {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Text(
-                'Diện tích mái nhà: ${item.roofArea}',
-              ),
-              Text(
-                'Hoá đơn tiền điện: ${item.roofArea}',
-              ),
+              // Text(
+              //   'Diện tích mái nhà: ${item.roofArea}',
+              // ),
+              // Text(
+              //   'Hoá đơn tiền điện: ${item.roofArea}',
+              // ),
             ],
           ),
           Wrap(

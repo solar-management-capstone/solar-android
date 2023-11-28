@@ -281,7 +281,7 @@ Widget _buildRow(BuildContext context, Package item) {
                       alignment: Alignment.center,
                       child: Image.network(
                         item.presentImage!,
-                        width: 70.0,
+                        height: 60.0,
                       ),
                     )
                   : const SizedBox(),
@@ -294,12 +294,12 @@ Widget _buildRow(BuildContext context, Package item) {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Text(
-                'Diện tích mái nhà: ${item.roofArea}',
-              ),
-              Text(
-                'Hoá đơn tiền điện: ${item.roofArea}',
-              ),
+              // Text(
+              //   'Diện tích mái nhà: ${item.roofArea}',
+              // ),
+              // Text(
+              //   'Hoá đơn tiền điện: ${item.roofArea}',
+              // ),
             ],
           ),
           Wrap(

@@ -14,29 +14,66 @@ class ConstructionContractService {
   }) async {
     List<ConstructionContract> listConstructionContract = [];
     String customerId = SharedPreferencesUtils.getId()!;
-    final response = await HttpClient.http.get(
-      Uri.parse(
-        '$uri/ConstructionContract/get-Construction-Contract-by-Customerid?customerId=$customerId&status=$status',
-      ),
-    );
-
-    if (context.mounted) {
-      httpErrorHandle(
-        response: response,
-        context: context,
-        onSuccess: () {
-          final data = json.decode(response.body);
-          if (data['data'] != null) {
-            // data dơ -> bữa sau xoá dòng check
-            for (var i = 0; i < data['data']?.length; i++) {
-              final entry = data['data'][i];
-              ConstructionContract constructionContract =
-                  ConstructionContract.fromJson(entry);
-              listConstructionContract.add(constructionContract);
-            }
-          }
-        },
+    if (status == 0) {
+      final response = await HttpClient.http.get(
+        Uri.parse(
+          '$uri/ConstructionContract/get-Construction-Contract-by-Customerid?customerId=$customerId&status=$status',
+        ),
       );
+
+      if (context.mounted) {
+        httpErrorHandle(
+          response: response,
+          context: context,
+          onSuccess: () {
+            final data = json.decode(response.body);
+            if (data['data'] != null) {
+              // data dơ -> bữa sau xoá dòng check
+              for (var i = 0; i < data['data']?.length; i++) {
+                final entry = data['data'][i];
+                ConstructionContract constructionContract =
+                    ConstructionContract.fromJson(entry);
+                listConstructionContract.add(constructionContract);
+              }
+            }
+          },
+        );
+      }
+    } else {
+      final response = await HttpClient.http.post(
+        Uri.parse(
+          '$uri/ConstructionContract/get-Construction-Contract-by-Customeridv2',
+        ),
+        body: json.encode(
+          {
+            'customerId': customerId,
+            'status': [
+              {'status': '1'},
+              {'status': '2'},
+              {'status': '3'},
+            ]
+          },
+        ),
+      );
+
+      if (context.mounted) {
+        httpErrorHandle(
+          response: response,
+          context: context,
+          onSuccess: () {
+            final data = json.decode(response.body);
+            if (data['data'] != null) {
+              // data dơ -> bữa sau xoá dòng check
+              for (var i = 0; i < data['data']?.length; i++) {
+                final entry = data['data'][i];
+                ConstructionContract constructionContract =
+                    ConstructionContract.fromJson(entry);
+                listConstructionContract.add(constructionContract);
+              }
+            }
+          },
+        );
+      }
     }
 
     return listConstructionContract;

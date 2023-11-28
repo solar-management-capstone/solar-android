@@ -86,7 +86,14 @@ class _PackageProductScreenState extends State<PackageProductScreen> {
       );
       if (mounted) {
         showSnackBar(context, 'Gửi yêu cầu tư vấn thành công');
-        // Navigator.pop(context);
+        Navigator.pop(
+          context,
+          MaterialPageRoute(
+            builder: (context) => NavigationBarApp(
+              pageIndex: widget.index,
+            ),
+          ),
+        );
       }
     } on CustomException catch (e) {
       if (mounted) {
@@ -115,14 +122,13 @@ class _PackageProductScreenState extends State<PackageProductScreen> {
       appBar: AppBar(
         title: const Text('Gói sản phẩm'),
         leading: IconButton(
-          onPressed: () => Navigator.pushAndRemoveUntil(
+          onPressed: () => Navigator.pop(
             context,
             MaterialPageRoute(
               builder: (context) => NavigationBarApp(
                 pageIndex: widget.index,
               ),
             ),
-            (route) => false,
           ),
           icon: const Icon(Icons.arrow_back),
         ),
@@ -259,7 +265,9 @@ class _PackageProductScreenState extends State<PackageProductScreen> {
                   onPressed: () => Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => NavigationBarApp(pageIndex: 3,),
+                      builder: (context) => NavigationBarApp(
+                        pageIndex: 3,
+                      ),
                     ),
                     (route) => false,
                   ),

@@ -77,6 +77,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           context,
           'Cập nhật thành công',
         );
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => NavigationBarApp(
+              pageIndex: 4,
+            ),
+          ),
+          (route) => false,
+        );
       }
     } on CustomException catch (e) {
       if (mounted) {

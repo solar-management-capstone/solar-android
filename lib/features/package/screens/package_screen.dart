@@ -245,7 +245,7 @@ class PackageScreenState extends State<PackageScreen> {
 Widget _buildRow(BuildContext context, Package item) {
   return InkWell(
     onTap: () {
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => PackageProductScreen(
@@ -253,7 +253,6 @@ Widget _buildRow(BuildContext context, Package item) {
             index: 1,
           ),
         ),
-        (route) => false,
       );
     },
     child: Container(

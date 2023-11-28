@@ -6,13 +6,15 @@ class CustomTextField extends StatelessWidget {
   final int maxLines;
   final bool? obscureText;
   final TextInputType? keyboardType;
+  final bool? readOnly;
   const CustomTextField({
     super.key,
     required this.controller,
     required this.hintText,
     this.maxLines = 1,
     this.obscureText = false,
-    this.keyboardType
+    this.keyboardType,
+    this.readOnly,
   });
 
   @override
@@ -37,6 +39,7 @@ class CustomTextField extends StatelessWidget {
       },
       maxLines: maxLines,
       keyboardType: keyboardType,
+      readOnly: readOnly ?? false,
     );
   }
 }

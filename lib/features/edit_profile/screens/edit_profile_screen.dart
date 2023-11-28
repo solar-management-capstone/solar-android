@@ -196,6 +196,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       CustomTextField(
                         controller: _phone,
                         hintText: 'Số điện thoại',
+                        readOnly: true,
                       ),
                       const SizedBox(height: 35.0),
                       ElevatedButton(

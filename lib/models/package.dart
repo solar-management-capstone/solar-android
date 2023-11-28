@@ -11,6 +11,7 @@ class Package {
     this.roofArea,
     this.electricBill,
     this.promotionId,
+    this.presentImage,
     this.status,
     this.packageProduct,
     this.promotion,
@@ -23,6 +24,7 @@ class Package {
   double? electricBill;
   double? promotionPrice;
   String? promotionId;
+  String? presentImage;
   bool? status;
   List<PackageProduct>? packageProduct;
   Promotion? promotion;
@@ -36,6 +38,7 @@ class Package {
     electricBill = json['electricBill'];
     roofArea = json['roofArea'];
     promotionId = json['promotionId'];
+    presentImage = json['presentImage'];
     status = json['status'];
     packageProduct = List?.from(json['packageProduct'])
         .map((e) => PackageProduct?.fromJson(e))
@@ -55,6 +58,7 @@ class Package {
     data['electricBill'] = electricBill;
     data['roofArea'] = roofArea;
     data['promotionId'] = promotionId;
+    data['presentImage'] = presentImage;
     data['status'] = status;
     data['packageProduct'] = packageProduct?.map((e) => e.toJson()).toList();
     if (promotion != null) {

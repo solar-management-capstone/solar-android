@@ -70,7 +70,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 options: CarouselOptions(height: 150, autoPlay: true),
               ),
               const SizedBox(height: 16.0),
-              const Text('Các gói được chọn nhiều nhất', style: TextStyle(fontWeight: FontWeight.bold),),
+              const Text(
+                'Các gói được chọn nhiều nhất',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
               const SizedBox(height: 16.0),
               // Text(
               //   'Diện tích mái nhà tối thiểu: ${_currentSliderRoofAreaValue.round().toString()} m2',
@@ -190,6 +193,9 @@ Widget _buildRow(BuildContext context, Package item) {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              item.presentImage != null
+                  ? Image.network(item.presentImage!, width: 100.0,)
+                  : const SizedBox(),
               Text(
                 item.name!.length > 50
                     ? '${item.name!.substring(0, 50)}...'

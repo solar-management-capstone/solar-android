@@ -256,7 +256,13 @@ class _PackageProductScreenState extends State<PackageProductScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ElevatedButton(
-                  onPressed: () => _handleSendRequest(''),
+                  onPressed: () => Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => NavigationBarApp(pageIndex: 3,),
+                    ),
+                    (route) => false,
+                  ),
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size(150, 50),
                     backgroundColor: Colors.white,
@@ -269,7 +275,7 @@ class _PackageProductScreenState extends State<PackageProductScreen> {
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: (){},
+                  onPressed: () => _handleSendRequest(''),
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size(200, 50),
                   ),

@@ -22,6 +22,7 @@ class ChatDetailScreenState extends State<ChatDetailScreen>
     with SingleTickerProviderStateMixin {
   final userId = SharedPreferencesUtils.getId();
   final TextEditingController _messageController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -33,7 +34,6 @@ class ChatDetailScreenState extends State<ChatDetailScreen>
     try {
       await ChatService().addMessage(message: _messageController.text);
       _messageController.clear();
-      FocusManager.instance.primaryFocus?.unfocus();
     } catch (e) {
       if (mounted) {
         showSnackBar(context, e.toString(), color: Colors.red);
@@ -46,9 +46,10 @@ class ChatDetailScreenState extends State<ChatDetailScreen>
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Quản lý',
+          'Nhắn tin với quản lý',
           style: TextStyle(color: Colors.black),
         ),
+        automaticallyImplyLeading: false,
         // leading: IconButton(
         //   onPressed: () => Navigator.pushAndRemoveUntil(
         //       context,
@@ -78,13 +79,20 @@ class ChatDetailScreenState extends State<ChatDetailScreen>
                           horizontal: 8.0,
                           vertical: 16.0,
                         ),
+                        reverse: true,
                         physics: const BouncingScrollPhysics(),
-                        itemBuilder: (context, index) => _userItem(
-                          context,
-                          value.messages[index].content!,
-                          value.messages[index].createdAt!,
-                          value.messages[index].userIdSent == userId,
-                        ),
+                        controller: _scrollController,
+                        itemBuilder: (context, index) {
+                          final messageReserved = value.messages.reversed
+                              .toList(); // reverse your list here
+
+                          return _userItem(
+                            context,
+                            messageReserved[index].content!,
+                            messageReserved[index].createdAt!,
+                            messageReserved[index].userIdSent == userId,
+                          );
+                        },
                         itemCount: value.messages.length,
                         separatorBuilder: (context, index) =>
                             const SizedBox(height: 10.0),
@@ -99,6 +107,9 @@ class ChatDetailScreenState extends State<ChatDetailScreen>
               children: [
                 Expanded(
                   child: TextFormField(
+                    scrollPadding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).viewInsets.bottom,
+                    ),
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black38),

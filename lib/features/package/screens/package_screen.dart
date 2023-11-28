@@ -276,6 +276,15 @@ Widget _buildRow(BuildContext context, Package item) {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              item.presentImage != null
+                  ? Align(
+                      alignment: Alignment.center,
+                      child: Image.network(
+                        item.presentImage!,
+                        width: 70.0,
+                      ),
+                    )
+                  : const SizedBox(),
               Text(
                 item.name!.length > 50
                     ? '${item.name!.substring(0, 50)}...'

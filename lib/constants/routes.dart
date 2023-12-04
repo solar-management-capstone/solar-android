@@ -18,4 +18,6 @@ class RoutePath {
   static const String feedbackRoute = '/feedback';
   static const String chatRoute = '/chat';
   static const String chatDetailRoute = '/chatDetail';
+  static const String changePasswordRoute = '/changePassword';
+  static const String notifyPaymentRoute = '/notifyPayment';
 }

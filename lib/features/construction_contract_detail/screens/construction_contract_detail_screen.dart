@@ -7,6 +7,7 @@ import 'package:mobile_solar_mp/features/construction_contract_detail/screens/we
 import 'package:mobile_solar_mp/features/construction_contract_detail/service/construction_contract_detail_service.dart';
 import 'package:mobile_solar_mp/features/history_construction_contract/screens/history_construction_contract.dart';
 import 'package:mobile_solar_mp/features/navigation_bar/navigation_bar_app.dart';
+import 'package:mobile_solar_mp/models/acceptance.dart';
 import 'package:mobile_solar_mp/models/construction_contract.dart';
 import 'package:mobile_solar_mp/models/payment.dart';
 import 'package:mobile_solar_mp/utils/shared_preferences.dart';
@@ -438,25 +439,38 @@ class ConstructionContractDetailScreenState
                             'Nghiệm thu:',
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 16.0),
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    const Text('Mô tả đánh giá: '),
-                                    Text(constructionContract
-                                            .acceptance?[0].feedback ??
-                                        ''),
-                                  ],
-                                ),
-                                _buildQuantityIconStar(
-                                  constructionContract.acceptance![0].rating!,
-                                ),
-                              ],
-                            ),
+                          ListView.separated(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            physics: const ClampingScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return _buildAcceptance(
+                                constructionContract.acceptance![index],
+                              );
+                            },
+                            itemCount: constructionContract.acceptance!.length,
+                            separatorBuilder: (context, index) =>
+                                const SizedBox(height: 10.0),
                           ),
+                          // Padding(
+                          //   padding:
+                          //       const EdgeInsets.symmetric(horizontal: 16.0),
+                          //   child: Column(
+                          //     children: [
+                          //       Row(
+                          //         children: [
+                          //           const Text('Mô tả đánh giá: '),
+                          //           Text(constructionContract
+                          //                   .acceptance?[0].feedback ??
+                          //               ''),
+                          //         ],
+                          //       ),
+                          //       _buildQuantityIconStar(
+                          //         constructionContract.acceptance![0].rating!,
+                          //       ),
+                          //     ],
+                          //   ),
+                          // ),
                         ],
                       ),
                     const SizedBox(
@@ -469,8 +483,11 @@ class ConstructionContractDetailScreenState
                       height: 8.0,
                     ),
                     const Text(
-                      'Hotline: 0909643365',
-                      style: TextStyle(color: Colors.red),
+                      'Liên hệ bảo hành: 0909643365',
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ],
                 ),
@@ -664,6 +681,43 @@ Widget _buildPaymentProcess(ConstructionContract constructionContract) {
           ],
         );
       },
+    ),
+  );
+}
+
+Widget _buildAcceptance(Acceptance acceptance) {
+  return Container(
+    color: Colors.grey[200],
+    padding: const EdgeInsets.all(8.0),
+    child: Row(
+      children: [
+        SizedBox(
+          height: 50.0,
+          child: FullScreenWidget(
+            disposeLevel: DisposeLevel.High,
+            child: Center(
+              child: Hero(
+                tag: {acceptance.imageFile},
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: Image.network(
+                    acceptance.imageFile!,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(width: 8.0),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Mô tả đánh giá: ${acceptance.feedback!}'),
+            _buildQuantityIconStar(acceptance.rating!),
+          ],
+        )
+      ],
     ),
   );
 }

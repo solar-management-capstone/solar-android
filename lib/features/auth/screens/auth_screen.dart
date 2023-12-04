@@ -321,16 +321,48 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
               const SizedBox(
                 height: 20.0,
               ),
-              CustomTextField(
+              TextFormField(
                 controller: _passwordController,
-                hintText: 'Mật khẩu',
                 obscureText: true,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black38),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black38),
+                  ),
+                  labelText: 'Mật khẩu',
+                ),
+                validator: (String? value) {
+                  if (value!.trim().isEmpty) {
+                    return 'Vui lòng nhập mật khẩu';
+                  }
+                  return null;
+                },
               ),
-              const SizedBox(height: 20.0),
-              CustomTextField(
+              const SizedBox(
+                height: 20.0,
+              ),
+              TextFormField(
                 controller: _confirmPasswordController,
-                hintText: 'Xác nhận mật khẩu',
                 obscureText: true,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black38),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black38),
+                  ),
+                  labelText: 'Nhập lại mật khẩu',
+                ),
+                validator: (String? value) {
+                  if (value!.trim().isEmpty) {
+                    return 'Vui lòng nhập lại mật khẩu';
+                  } else if (value.trim() != _passwordController.text) {
+                    return 'Mật khẩu không khớp';
+                  }
+                  return null;
+                },
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),

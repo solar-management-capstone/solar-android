@@ -211,7 +211,16 @@ class _PackageProductScreenState extends State<PackageProductScreen> {
                       ],
                     ),
                     const SizedBox(height: 10.0),
-                    Text('Mô tả: ${package.description}'),
+                    const Text(
+                      'Mô tả:',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 10.0),
+                    Container(
+                      color: Colors.grey[200],
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text('${package.description}'),
+                    ),
                     const SizedBox(height: 10.0),
                     Text(
                       'Giảm giá từ ngày ${formatDateTime(package.promotion!.startDate!)} đến ngày ${formatDateTime(package.promotion!.endDate!)}',
@@ -500,7 +509,7 @@ class _PackageProductScreenState extends State<PackageProductScreen> {
           ),
           const SizedBox(height: 10.0),
           Text(
-            'Material: ${bracket.material}',
+            'Vật liệu: ${bracket.material}',
           ),
           const SizedBox(height: 10.0),
           Text(

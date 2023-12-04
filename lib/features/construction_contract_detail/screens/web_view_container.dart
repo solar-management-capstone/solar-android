@@ -2,7 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:mobile_solar_mp/constants/routes.dart';
+import 'package:mobile_solar_mp/constants/utils.dart';
 import 'package:mobile_solar_mp/features/construction_contract_detail/screens/construction_contract_detail_screen.dart';
+import 'package:mobile_solar_mp/features/construction_contract_detail/screens/notify_payment_screen.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewContainer extends StatefulWidget {
@@ -43,16 +45,15 @@ class _WebViewContainerState extends State<WebViewContainer> {
               },
               onWebResourceError: (WebResourceError error) {},
               onNavigationRequest: (NavigationRequest request) {
-                log('loading');
                 if (request.url.startsWith(
                   'https://solar-caps.azurewebsites.net/api/VNPay/PaymentConfirm',
                 )) {
-                  log('success');
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    RoutePath.constructionContractRoute,
-                    (route) => false,
-                  );
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const NotifyPaymentScreen(),
+                      ),
+                      (route) => false);
                   return NavigationDecision.prevent;
                 }
                 return NavigationDecision.navigate;

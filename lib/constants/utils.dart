@@ -26,3 +26,8 @@ String formatDateTime(String value) {
   DateTime dateTime = DateTime.parse(value);
   return DateFormat('hh:mm dd/MM/yyyy').format(dateTime);
 }
+
+String formatDate(String value) {
+  DateTime dateTime = DateTime.parse(value);
+  return DateFormat('dd/MM/yyyy').format(dateTime);
+}

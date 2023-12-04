@@ -194,10 +194,52 @@ class ConstructionContractDetailScreenState
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Nhân viên:',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            'Nhân viên:',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.all(8.0),
+                            decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(8.0),
+                              ),
+                              border: Border.fromBorderSide(
+                                BorderSide(
+                                  width: 1.0,
+                                  color: Colors.black54,
+                                  style: BorderStyle.solid,
+                                ),
+                              ),
+                            ),
+                            child: constructionContract.status == '0'
+                                ? const Text(
+                                    'Đã huỷ',
+                                    style: TextStyle(color: Colors.red),
+                                  )
+                                : constructionContract.status == '1'
+                                    ? const Text(
+                                        'Chờ duyệt',
+                                        style: TextStyle(color: Colors.green),
+                                      )
+                                    : constructionContract.status == '2'
+                                        ? const Text(
+                                            'Hoạt động',
+                                            style:
+                                                TextStyle(color: Colors.blue),
+                                          )
+                                        : constructionContract.status == '3'
+                                            ? const Text(
+                                                'Hoàn thành',
+                                                style: TextStyle(
+                                                    color: Colors.deepPurple),
+                                              )
+                                            : const SizedBox(),
+                          )
+                        ]),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: Column(
@@ -218,35 +260,6 @@ class ConstructionContractDetailScreenState
                       height: 8.0,
                     ),
                     const Text(
-                      'Khung đỡ:',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('${constructionContract.bracket?.name}'),
-                          Row(
-                            children: [
-                              const Text('Giá: '),
-                              Text(
-                                formatCurrency(
-                                    constructionContract.bracket!.price!),
-                                style: const TextStyle(color: Colors.red),
-                              )
-                            ],
-                          ),
-                          Text(
-                            'Nhà sản xuất: ${constructionContract.bracket?.manufacturer}',
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 8.0,
-                    ),
-                    const Text(
                       'Gói:',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
@@ -259,66 +272,121 @@ class ConstructionContractDetailScreenState
                           Text(
                             'Mô tả: ${constructionContract.package?.description}',
                           ),
-                          Wrap(
-                            children: [
-                              if (constructionContract.package?.promotion !=
-                                  null)
-                                Wrap(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        const Text('Giá: '),
-                                        Text(
-                                          constructionContract.package?.price !=
-                                                  null
-                                              ? formatCurrency(
-                                                  constructionContract
-                                                      .package!.price!,
-                                                )
-                                              : 'null',
-                                          style: const TextStyle(
-                                            decoration:
-                                                TextDecoration.lineThrough,
-                                          ),
-                                        ),
-                                        const Text(' '),
-                                        Text(
-                                          '${constructionContract.package?.promotion?.amount.toString().replaceAll('.0', '')}%',
-                                        ),
-                                        Text(
-                                          constructionContract.package
-                                                      ?.promotionPrice !=
-                                                  null
-                                              ? ' ${formatCurrency(
-                                                  constructionContract
-                                                      .package!.promotionPrice!,
-                                                )}'
-                                              : 'null',
-                                          style: const TextStyle(
-                                              color: Colors.red,
-                                              fontSize: 16.0),
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                )
-                              else
-                                Row(
-                                  children: [
-                                    const Text(
-                                      'Giá: ',
-                                    ),
-                                    Text(
-                                      formatCurrency(
-                                          constructionContract.package!.price!),
-                                      style: const TextStyle(color: Colors.red),
-                                    ),
-                                  ],
-                                ),
-                            ],
+                          // Wrap(
+                          //   children: [
+                          //     if (constructionContract.package?.promotion !=
+                          //         null)
+                          //       Wrap(
+                          //         children: [
+                          //           Row(
+                          //             children: [
+                          //               const Text('Giá: '),
+                          //               Text(
+                          //                 constructionContract.package?.price !=
+                          //                         null
+                          //                     ? formatCurrency(
+                          //                         constructionContract
+                          //                             .package!.price!,
+                          //                       )
+                          //                     : 'null',
+                          //                 style: const TextStyle(
+                          //                   decoration:
+                          //                       TextDecoration.lineThrough,
+                          //                 ),
+                          //               ),
+                          //               const Text(' '),
+                          //               Text(
+                          //                 '${constructionContract.package?.promotion?.amount.toString().replaceAll('.0', '')}%',
+                          //               ),
+                          //               Text(
+                          //                 constructionContract.package
+                          //                             ?.promotionPrice !=
+                          //                         null
+                          //                     ? ' ${formatCurrency(
+                          //                         constructionContract
+                          //                             .package!.promotionPrice!,
+                          //                       )}'
+                          //                     : 'null',
+                          //                 style: const TextStyle(
+                          //                     color: Colors.red,
+                          //                     fontSize: 16.0),
+                          //               )
+                          //             ],
+                          //           ),
+                          //         ],
+                          //       )
+                          //     else
+                          //       Row(
+                          //         children: [
+                          //           const Text(
+                          //             'Giá trị hợp đồng: ',
+                          //           ),
+                          //           Text(
+                          //             formatCurrency(
+                          //                 constructionContract.package!.price!),
+                          //             style: const TextStyle(color: Colors.red),
+                          //           ),
+                          //         ],
+                          //       ),
+                          //   ],
+                          // ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 8.0),
+                    const Text(
+                      'Khung đỡ:',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 8.0),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('${constructionContract.bracket?.name}'),
+                          // Row(
+                          //   children: [
+                          //     const Text('Giá: '),
+                          //     Text(
+                          //       formatCurrency(
+                          //           constructionContract.bracket!.price!),
+                          //       style: const TextStyle(color: Colors.red),
+                          //     )
+                          //   ],
+                          // ),
+                          Text(
+                            'Nhà sản xuất: ${constructionContract.bracket?.manufacturer}',
+                          ),
+                          Text(
+                            'Vật liệu: ${constructionContract.bracket?.material}',
+                          ),
+                          Text(
+                            'Kích thước: ${constructionContract.bracket?.size}',
                           ),
                         ],
                       ),
+                    ),
+                    const SizedBox(
+                      height: 8.0,
+                    ),
+                    Row(
+                      children: [
+                        const Text(
+                          'Giá trị hợp đồng: ',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          formatCurrency(constructionContract.totalcost!),
+                          style: const TextStyle(
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 8.0,
                     ),
                     if (constructionContract.paymentProcess?.length != null &&
                         constructionContract.paymentProcess!.isNotEmpty)
@@ -395,7 +463,14 @@ class ConstructionContractDetailScreenState
                       height: 8.0,
                     ),
                     Text(
-                      'Hợp đồng từ ngày: ${formatDateTime(constructionContract.startdate!)} đến ngày: ${formatDateTime(constructionContract.enddate!)}',
+                      'Thời hạn hợp đồng từ ngày: ${formatDate(constructionContract.startdate!)} đến ngày: ${formatDate(constructionContract.enddate!)}',
+                    ),
+                    const SizedBox(
+                      height: 8.0,
+                    ),
+                    const Text(
+                      'Hotline: 0909643365',
+                      style: TextStyle(color: Colors.red),
                     ),
                   ],
                 ),

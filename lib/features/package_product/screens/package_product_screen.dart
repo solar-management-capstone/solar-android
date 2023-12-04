@@ -3,11 +3,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:full_screen_image/full_screen_image.dart';
 import 'package:mobile_solar_mp/common/handle_exception/bad_request_exception.dart';
-import 'package:mobile_solar_mp/common/widgets/custom_button.dart';
 import 'package:mobile_solar_mp/constants/routes.dart';
 import 'package:mobile_solar_mp/constants/utils.dart';
 import 'package:mobile_solar_mp/features/navigation_bar/navigation_bar_app.dart';
 import 'package:mobile_solar_mp/features/package_product/service/package_product_service.dart';
+import 'package:mobile_solar_mp/models/bracket.dart';
 import 'package:mobile_solar_mp/models/feedback.dart' as feedback_model;
 import 'package:mobile_solar_mp/models/package.dart';
 import 'package:mobile_solar_mp/models/package_product.dart';
@@ -143,28 +143,24 @@ class _PackageProductScreenState extends State<PackageProductScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    package.presentImage != null
+                        ? Column(children: [
+                            Align(
+                              alignment: Alignment.center,
+                              child: Image.network(
+                                package.presentImage!,
+                                height: 200,
+                              ),
+                            ),
+                            const SizedBox(height: 10.0)
+                          ])
+                        : const SizedBox(),
                     Text(
                       package.name!,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16.0,
                       ),
-                    ),
-                    const SizedBox(height: 10.0),
-                    Text('Mô tả: ${package.description}'),
-                    const SizedBox(height: 10.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Diện tích mái nhà: ${package.roofArea}',
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          'Hoá đơn tiền điện: ${package.roofArea}',
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ],
                     ),
                     const SizedBox(height: 10.0),
                     package.promotion != null
@@ -201,6 +197,22 @@ class _PackageProductScreenState extends State<PackageProductScreen> {
                             ),
                           ),
                     const SizedBox(height: 10.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Diện tích mái nhà: ${package.roofArea}',
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          'Hoá đơn tiền điện: ${package.roofArea}',
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10.0),
+                    Text('Mô tả: ${package.description}'),
+                    const SizedBox(height: 10.0),
                     Text(
                       'Giảm giá từ ngày ${formatDateTime(package.promotion!.startDate!)} đến ngày ${formatDateTime(package.promotion!.endDate!)}',
                       style: const TextStyle(color: Colors.red),
@@ -212,7 +224,7 @@ class _PackageProductScreenState extends State<PackageProductScreen> {
                           fontWeight: FontWeight.bold, fontSize: 16.0),
                     ),
                     const SizedBox(height: 10.0),
-                    ListView.builder(
+                    ListView.separated(
                       scrollDirection: Axis.vertical,
                       itemCount: listPackageProduct.length,
                       shrinkWrap: true,
@@ -222,6 +234,31 @@ class _PackageProductScreenState extends State<PackageProductScreen> {
                           listPackageProduct[index].product!,
                         );
                       },
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(height: 10.0),
+                    ),
+                    const SizedBox(height: 10.0),
+                    const Text(
+                      'Khung đỡ:',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 16.0),
+                    ),
+                    const SizedBox(height: 10.0),
+                    ListView.separated(
+                      scrollDirection: Axis.vertical,
+                      itemCount: listPackageProduct.length,
+                      shrinkWrap: true,
+                      physics: const ClampingScrollPhysics(),
+                      itemBuilder: (BuildContext context, int index) {
+                        listPackageProduct[index].bracket != null
+                            ? _buildBracketWidget(
+                                listPackageProduct[index].bracket!,
+                              )
+                            : null;
+                        return null;
+                      },
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(height: 10.0),
                     ),
                     const SizedBox(height: 10.0),
                     const Text('ĐÁNH GIÁ GÓI'),
@@ -256,7 +293,7 @@ class _PackageProductScreenState extends State<PackageProductScreen> {
             ),
           ),
           Container(
-            color: Colors.white,
+            color: Colors.grey[200],
             padding: const EdgeInsets.all(8.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -276,21 +313,24 @@ class _PackageProductScreenState extends State<PackageProductScreen> {
                     backgroundColor: Colors.white,
                   ),
                   child: const Text(
-                    'Nhắn tin',
+                    'Chat',
                     style: TextStyle(
                       color: Colors.black,
                     ),
                   ),
                 ),
-                ElevatedButton(
-                  onPressed: () => _handleSendRequest(''),
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(200, 50),
-                  ),
-                  child: const Text(
-                    'Gửi yêu cầu tư vấn',
-                    style: TextStyle(
-                      color: Colors.white,
+                const SizedBox(width: 8.0),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () => _handleSendRequest(''),
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(double.infinity, 50),
+                    ),
+                    child: const Text(
+                      'Gửi yêu cầu tư vấn',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
@@ -342,7 +382,7 @@ class _PackageProductScreenState extends State<PackageProductScreen> {
       margin: const EdgeInsets.only(bottom: 8.0),
       height: 80.0,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Colors.white70,
         borderRadius: const BorderRadius.all(Radius.circular(8.0)),
         boxShadow: [
           BoxShadow(
@@ -377,51 +417,105 @@ class _PackageProductScreenState extends State<PackageProductScreen> {
   }
 
   Widget _buildProductWidget(Product product) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          height: product.image!.isNotEmpty ? 200.0 : 0,
-          width: double.infinity,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            shrinkWrap: true,
-            itemCount: product.image?.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Container(
-                padding: const EdgeInsets.only(right: 10.0),
-                child: FullScreenWidget(
-                  disposeLevel: DisposeLevel.High,
-                  child: Center(
-                    child: Hero(
-                      tag: 'image-${Random().nextInt(100)}',
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(16.0),
-                        child: Image.network(
-                          product.image![index].imageData!,
-                          fit: BoxFit.cover,
+    return Container(
+      color: Colors.grey[200],
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: product.image!.isNotEmpty ? 200.0 : 0,
+            width: double.infinity,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              shrinkWrap: true,
+              itemCount: product.image?.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Container(
+                  padding: const EdgeInsets.only(right: 10.0),
+                  child: FullScreenWidget(
+                    disposeLevel: DisposeLevel.High,
+                    child: Center(
+                      child: Hero(
+                        tag: 'image-${Random().nextInt(100)}',
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(16.0),
+                          child: Image.network(
+                            product.image![index].imageData!,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
-        ),
-        const SizedBox(height: 20.0),
-        Text(
-          product.name!,
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10.0),
-        Text(
-          formatCurrency(product.price!),
-          style:
-              const TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 20.0),
-      ],
+          const SizedBox(height: 20.0),
+          Text(
+            product.name!,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 10.0),
+          Text(
+            'Nhà sản xuất: ${product.manufacturer}',
+          ),
+          const SizedBox(height: 10.0),
+          Text(
+            'Tính năng: ${product.feature}',
+          ),
+          const SizedBox(height: 10.0),
+          Text(
+            'Thời gian bảo hành: ${formatDateTime(product.warrantyDate!)}',
+          ),
+          // const SizedBox(height: 10.0),
+          // Text(
+          //   formatCurrency(product.price!),
+          //   style: const TextStyle(
+          //     color: Colors.red,
+          //     fontWeight: FontWeight.bold,
+          //   ),
+          // ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBracketWidget(Bracket bracket) {
+    return Container(
+      color: Colors.grey[200],
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 20.0),
+          Text(
+            bracket.name!,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 10.0),
+          Text(
+            'Nhà sản xuất: ${bracket.manufacturer}',
+          ),
+          const SizedBox(height: 10.0),
+          Text(
+            'Material: ${bracket.material}',
+          ),
+          const SizedBox(height: 10.0),
+          Text(
+            'Kích thước: ${bracket.size}',
+          ),
+          // const SizedBox(height: 10.0),
+          // Text(
+          //   formatCurrency(bracket.price!),
+          //   style: const TextStyle(
+          //     color: Colors.red,
+          //     fontWeight: FontWeight.bold,
+          //   ),
+          // ),
+        ],
+      ),
     );
   }
 }

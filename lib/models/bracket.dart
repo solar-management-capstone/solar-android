@@ -6,6 +6,8 @@ class Bracket {
   String? name;
   double? price;
   String? manufacturer;
+  String? material;
+  double? size;
   bool? status;
   List<ConstructionContract>? constructionContract;
   List<ImageModel>? image;
@@ -15,6 +17,8 @@ class Bracket {
     this.name,
     this.price,
     this.manufacturer,
+    this.material,
+    this.size,
     this.status,
     this.constructionContract,
     this.image,
@@ -25,6 +29,8 @@ class Bracket {
     name = json['name'];
     price = json['price'];
     manufacturer = json['manufacturer'];
+    material = json['material'];
+    size = json['size'];
     status = json['status'];
     if (json['constructionContract'] != null) {
       constructionContract = <ConstructionContract>[];
@@ -46,6 +52,7 @@ class Bracket {
     data['name'] = name;
     data['price'] = price;
     data['manufacturer'] = manufacturer;
+    data['material'] = material;
     data['status'] = status;
     if (constructionContract != null) {
       data['constructionContract'] =

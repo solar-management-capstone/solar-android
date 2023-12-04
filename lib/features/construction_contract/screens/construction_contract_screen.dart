@@ -168,7 +168,7 @@ Widget _buildContract(
     child: Container(
       padding: const EdgeInsets.all(8.0),
       margin: const EdgeInsets.only(bottom: 8.0),
-      height: 120.0,
+      height: 90.0,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: const BorderRadius.all(Radius.circular(8.0)),
@@ -187,23 +187,23 @@ Widget _buildContract(
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Text(
+              //   'Tên nhân viên: ${constructionContract.staff?.firstname} ${constructionContract.staff?.lastname}',
+              // ),
+              // Text(
+              //   constructionContract.bracket!.name!.length > 40
+              //       ? 'Khung đỡ: ${constructionContract.bracket!.name!.substring(0, 40)}...'
+              //       : 'Khung đỡ: ${constructionContract.bracket?.name}',
+              // ),
               Text(
-                'Tên nhân viên: ${constructionContract.staff?.firstname} ${constructionContract.staff?.lastname}',
-              ),
-              Text(
-                constructionContract.bracket!.name!.length > 40
-                    ? 'Khung đỡ: ${constructionContract.bracket!.name!.substring(0, 40)}...'
-                    : 'Khung đỡ: ${constructionContract.bracket?.name}',
-              ),
-              Text(
-                constructionContract.package!.name!.length > 40
-                    ? 'Gói: ${constructionContract.package!.name!.substring(0, 40)}...'
+                constructionContract.package!.name!.length > 100
+                    ? 'Gói: ${constructionContract.package!.name!.substring(0, 100)}...'
                     : 'Gói: ${constructionContract.package?.name}',
               ),
               Row(
                 children: [
                   const Text(
-                    'Tổng số tiền: ',
+                    'Giá trị hợp đồng: ',
                   ),
                   Text(
                     formatCurrency(constructionContract.totalcost!),
@@ -219,11 +219,14 @@ Widget _buildContract(
               Row(
                 children: [
                   Text(
-                    'Từ: ${formatDateTime(constructionContract.startdate!)}',
+                    'Thời hạn HĐ ',
+                  ),
+                  Text(
+                    'từ ${formatDate(constructionContract.startdate!)}',
                   ),
                   const Text(' '),
                   Text(
-                    'Đến: ${formatDateTime(constructionContract.enddate!)}',
+                    'đến ${formatDate(constructionContract.enddate!)}',
                   ),
                 ],
               ),

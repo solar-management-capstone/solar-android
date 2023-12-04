@@ -1,4 +1,5 @@
 import 'package:mobile_solar_mp/models/product.dart';
+import 'package:mobile_solar_mp/models/bracket.dart';
 
 class PackageProduct {
   PackageProduct({
@@ -7,12 +8,14 @@ class PackageProduct {
     this.status,
     this.quantity,
     this.product,
+    this.bracket,
   });
   String? productId;
   String? packageId;
   bool? status;
   int? quantity;
   Product? product;
+  Bracket? bracket;
 
   PackageProduct.fromJson(Map<String, dynamic> json) {
     productId = json['productId'];
@@ -21,6 +24,8 @@ class PackageProduct {
     quantity = json['quantity'];
     product =
         json['product'] != null ? Product.fromJson(json['product']) : null;
+    bracket =
+        json['bracket'] != null ? Bracket.fromJson(json['bracket']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -30,6 +35,7 @@ class PackageProduct {
     data['status'] = status;
     data['quantity'] = quantity;
     data['product'] = product?.toJson();
+    data['bracket'] = bracket?.toJson();
     return data;
   }
 }

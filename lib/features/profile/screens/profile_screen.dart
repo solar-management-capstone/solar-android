@@ -95,6 +95,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: const Text('Đăng xuất'),
               ),
             ),
+            const Expanded(
+              child: Center(
+                child: Text('Hotline: 0909643365', style: TextStyle(color: Colors.red),)
+              ),
+            ),
           ],
         ),
       ),

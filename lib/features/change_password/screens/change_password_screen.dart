@@ -121,6 +121,10 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 validator: (String? value) {
                   if (value!.trim().isEmpty) {
                     return 'Vui lòng nhập mật khẩu mới';
+                  } else {
+                    if (value.trim().length < 6 || value.trim().length > 8) {
+                      return 'Mật khẩu phải có độ dài 6 đến 8 kí tự';
+                    }
                   }
                   return null;
                 },

@@ -313,10 +313,28 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                 },
               ),
               const SizedBox(height: 20.0),
-              CustomTextField(
+              TextFormField(
                 controller: _usernameController,
-                hintText: 'Số điện thoại',
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black38),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black38),
+                  ),
+                  labelText: 'Số điện thoại',
+                ),
                 keyboardType: TextInputType.phone,
+                validator: (String? value) {
+                  if (value!.trim().isEmpty) {
+                    return 'Vui lòng nhập số điện thoại';
+                  } else {
+                    if (value.trim().length != 10) {
+                      return 'Số điện thoại phải có độ dài 10 kí tự';
+                    }
+                  }
+                  return null;
+                },
               ),
               const SizedBox(
                 height: 20.0,
@@ -336,6 +354,10 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                 validator: (String? value) {
                   if (value!.trim().isEmpty) {
                     return 'Vui lòng nhập mật khẩu';
+                  } else {
+                    if (value.trim().length < 6 || value.trim().length > 8) {
+                      return 'Mật khẩu phải có độ dài 6 đến 8 kí tự';
+                    }
                   }
                   return null;
                 },

@@ -27,6 +27,9 @@ class _PackageProductScreenState extends State<PackageProductScreen> {
   late Package package = widget.package!;
   late Future<List<feedback_model.Feedback>> feedbacks =
       [] as Future<List<feedback_model.Feedback>>;
+  late String firstHalfDescription;
+  late String secondHalfDescription;
+  bool isShowMoreDescription = true;
 
   Future<List<feedback_model.Feedback>> _handleGetFeedbacksByPackageId() async {
     List<feedback_model.Feedback> feedbacks = [];
@@ -60,6 +63,18 @@ class _PackageProductScreenState extends State<PackageProductScreen> {
     super.initState();
 
     feedbacks = _handleGetFeedbacksByPackageId();
+    if (package.description!.length > 100) {
+      setState(() {
+        firstHalfDescription = package.description!.substring(0, 100);
+        secondHalfDescription =
+            package.description!.substring(100, package.description!.length);
+      });
+    } else {
+      setState(() {
+        firstHalfDescription = package.description!;
+        secondHalfDescription = "";
+      });
+    }
   }
 
   // void _openModal(BuildContext context) {
@@ -201,11 +216,11 @@ class _PackageProductScreenState extends State<PackageProductScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Diện tích mái nhà: ${package.roofArea}',
+                          'Diện tích mái nhà: ${package.roofArea}m2',
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          'Hoá đơn tiền điện: ${package.roofArea}',
+                          'Hoá đơn tiền điện: ${formatCurrency(package.electricBill!)}',
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ],
@@ -216,14 +231,46 @@ class _PackageProductScreenState extends State<PackageProductScreen> {
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 10.0),
-                    Container(
-                      color: Colors.grey[200],
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text('${package.description}'),
-                    ),
+                    secondHalfDescription.isEmpty
+                        ? Container(
+                            color: Colors.grey[200],
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text('${package.description}'),
+                          )
+                        : Container(
+                            color: Colors.grey[200],
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                Text(isShowMoreDescription
+                                    ? '$firstHalfDescription ...'
+                                    : '$firstHalfDescription + $secondHalfDescription'),
+                                InkWell(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: <Widget>[
+                                      Text(
+                                        isShowMoreDescription
+                                            ? "xem thêm"
+                                            : "hiện ít hơn",
+                                        style:
+                                            const TextStyle(color: Colors.blue),
+                                      ),
+                                    ],
+                                  ),
+                                  onTap: () {
+                                    setState(() {
+                                      isShowMoreDescription =
+                                          !isShowMoreDescription;
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
                     const SizedBox(height: 10.0),
                     Text(
-                      'Giảm giá từ ngày ${formatDateTime(package.promotion!.startDate!)} đến ngày ${formatDateTime(package.promotion!.endDate!)}',
+                      'Giảm giá từ ngày ${formatDate(package.promotion!.startDate!)} đến ngày ${formatDate(package.promotion!.endDate!)}',
                       style: const TextStyle(color: Colors.red),
                     ),
                     const SizedBox(height: 10.0),
@@ -241,34 +288,35 @@ class _PackageProductScreenState extends State<PackageProductScreen> {
                       itemBuilder: (BuildContext context, int index) {
                         return _buildProductWidget(
                           listPackageProduct[index].product!,
+                          listPackageProduct[index].quantity!,
                         );
                       },
                       separatorBuilder: (context, index) =>
                           const SizedBox(height: 10.0),
                     ),
-                    const SizedBox(height: 10.0),
-                    const Text(
-                      'Khung đỡ:',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 16.0),
-                    ),
-                    const SizedBox(height: 10.0),
-                    ListView.separated(
-                      scrollDirection: Axis.vertical,
-                      itemCount: listPackageProduct.length,
-                      shrinkWrap: true,
-                      physics: const ClampingScrollPhysics(),
-                      itemBuilder: (BuildContext context, int index) {
-                        listPackageProduct[index].bracket != null
-                            ? _buildBracketWidget(
-                                listPackageProduct[index].bracket!,
-                              )
-                            : null;
-                        return null;
-                      },
-                      separatorBuilder: (context, index) =>
-                          const SizedBox(height: 10.0),
-                    ),
+                    // const SizedBox(height: 10.0),
+                    // const Text(
+                    //   'Khung đỡ:',
+                    //   style: TextStyle(
+                    //       fontWeight: FontWeight.bold, fontSize: 16.0),
+                    // ),
+                    // const SizedBox(height: 10.0),
+                    // ListView.separated(
+                    //   scrollDirection: Axis.vertical,
+                    //   itemCount: listPackageProduct.length,
+                    //   shrinkWrap: true,
+                    //   physics: const ClampingScrollPhysics(),
+                    //   itemBuilder: (BuildContext context, int index) {
+                    //     listPackageProduct[index].bracket != null
+                    //         ? _buildBracketWidget(
+                    //             listPackageProduct[index].bracket!,
+                    //           )
+                    //         : null;
+                    //     return null;
+                    //   },
+                    //   separatorBuilder: (context, index) =>
+                    //       const SizedBox(height: 10.0),
+                    // ),
                     const SizedBox(height: 10.0),
                     const Text('ĐÁNH GIÁ GÓI'),
                     const SizedBox(height: 10.0),
@@ -308,14 +356,13 @@ class _PackageProductScreenState extends State<PackageProductScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ElevatedButton(
-                  onPressed: () => Navigator.pushAndRemoveUntil(
+                  onPressed: () => Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => NavigationBarApp(
                         pageIndex: 3,
                       ),
                     ),
-                    (route) => false,
                   ),
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size(150, 50),
@@ -425,7 +472,7 @@ class _PackageProductScreenState extends State<PackageProductScreen> {
     );
   }
 
-  Widget _buildProductWidget(Product product) {
+  Widget _buildProductWidget(Product product, int quantity) {
     return Container(
       color: Colors.grey[200],
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
@@ -475,8 +522,14 @@ class _PackageProductScreenState extends State<PackageProductScreen> {
             'Tính năng: ${product.feature}',
           ),
           const SizedBox(height: 10.0),
-          Text(
-            'Thời gian bảo hành: ${formatDateTime(product.warrantyDate!)}',
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Thời gian bảo hành: ${formatDate(product.warrantyDate!)}',
+              ),
+              Text('x$quantity')
+            ],
           ),
           // const SizedBox(height: 10.0),
           // Text(

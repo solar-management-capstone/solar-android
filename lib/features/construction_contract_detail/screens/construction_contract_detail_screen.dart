@@ -76,13 +76,11 @@ class ConstructionContractDetailScreenState
   // }
 
   void _handlePayment({
-    required double amount,
     required String constructionContractId,
   }) async {
     try {
       Payment payment = await ConstructionContractDetailService().createPayment(
         context: context,
-        amount: amount,
         constructionContractId: constructionContractId,
         accountId: SharedPreferencesUtils.getId()!,
       );
@@ -554,7 +552,6 @@ class ConstructionContractDetailScreenState
               color: Colors.white,
               child: ElevatedButton(
                 onPressed: () => _handlePayment(
-                  amount: constructionContract.totalcost!,
                   constructionContractId:
                       constructionContract.constructioncontractId!,
                 ),
@@ -562,7 +559,27 @@ class ConstructionContractDetailScreenState
                   minimumSize: const Size(double.infinity, 50),
                 ),
                 child: const Text(
-                  'Thanh toán',
+                  'Đặt cọc',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          if (constructionContract.status == '3')
+            Container(
+              padding: const EdgeInsets.all(8.0),
+              color: Colors.white,
+              child: ElevatedButton(
+                onPressed: () => _handlePayment(
+                  constructionContractId:
+                      constructionContract.constructioncontractId!,
+                ),
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size(double.infinity, 50),
+                ),
+                child: const Text(
+                  'Tất toán',
                   style: TextStyle(
                     color: Colors.white,
                   ),

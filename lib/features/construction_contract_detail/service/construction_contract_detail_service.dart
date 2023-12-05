@@ -35,7 +35,6 @@ class ConstructionContractDetailService {
 
   Future<Payment> createPayment({
     required BuildContext context,
-    required double amount,
     required String constructionContractId,
     required String accountId,
   }) async {
@@ -45,9 +44,8 @@ class ConstructionContractDetailService {
         '$uri/Payment/Insert-payment',
       ),
       body: json.encode({
-        'amount': amount,
         'constructionContractId': constructionContractId,
-        'isDeposit': true,
+        // 'isDeposit': true,
         'accountId': accountId
       }),
     );

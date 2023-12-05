@@ -168,7 +168,7 @@ Widget _buildContract(
     child: Container(
       padding: const EdgeInsets.all(8.0),
       margin: const EdgeInsets.only(bottom: 8.0),
-      height: 90.0,
+      height: 110.0,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: const BorderRadius.all(Radius.circular(8.0)),

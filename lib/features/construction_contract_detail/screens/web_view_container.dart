@@ -5,20 +5,33 @@ import 'package:mobile_solar_mp/constants/routes.dart';
 import 'package:mobile_solar_mp/constants/utils.dart';
 import 'package:mobile_solar_mp/features/construction_contract_detail/screens/construction_contract_detail_screen.dart';
 import 'package:mobile_solar_mp/features/construction_contract_detail/screens/notify_payment_screen.dart';
+import 'package:mobile_solar_mp/models/construction_contract.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewContainer extends StatefulWidget {
   static const String routeName = RoutePath.constructionContractDetailRoute;
   String? url;
-  WebViewContainer({super.key, this.url});
+  ConstructionContract? constructionContract;
+  WebViewContainer({
+    super.key,
+    this.url,
+    this.constructionContract,
+  });
 
   @override
-  State<WebViewContainer> createState() => _WebViewContainerState(url: url!);
+  State<WebViewContainer> createState() => _WebViewContainerState(
+        url: url!,
+        constructionContract: constructionContract!,
+      );
 }
 
 class _WebViewContainerState extends State<WebViewContainer> {
   final String url;
-  _WebViewContainerState({required this.url});
+  ConstructionContract constructionContract;
+  _WebViewContainerState({
+    required this.url,
+    required this.constructionContract,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -49,11 +62,14 @@ class _WebViewContainerState extends State<WebViewContainer> {
                   'https://solar-caps.azurewebsites.net/api/VNPay/PaymentConfirm',
                 )) {
                   Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const NotifyPaymentScreen(),
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => NotifyPaymentScreen(
+                        constructionContract: constructionContract,
                       ),
-                      (route) => false);
+                    ),
+                    (route) => false,
+                  );
                   return NavigationDecision.prevent;
                 }
                 return NavigationDecision.navigate;

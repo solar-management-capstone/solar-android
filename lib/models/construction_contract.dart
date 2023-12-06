@@ -1,5 +1,6 @@
 import 'package:mobile_solar_mp/models/acceptance.dart';
 import 'package:mobile_solar_mp/models/bracket.dart';
+import 'package:mobile_solar_mp/models/feedback.dart';
 import 'package:mobile_solar_mp/models/package.dart';
 import 'package:mobile_solar_mp/models/payment_process.dart';
 import 'package:mobile_solar_mp/models/staff.dart';
@@ -16,12 +17,14 @@ class ConstructionContract {
   String? staffid;
   String? packageId;
   String? bracketId;
+  String? serveyId;
   Bracket? bracket;
+  String? description;
   // Customer? customer;
   Package? package;
   Staff? staff;
   List<Acceptance>? acceptance;
-  // List<Null>? feedback;
+  List<Feedback>? feedback;
   List<PaymentProcess>? paymentProcess;
   // List<Process>? process;
   // List<WarrantyReport>? warrantyReport;
@@ -38,12 +41,14 @@ class ConstructionContract {
     this.staffid,
     this.packageId,
     this.bracketId,
+    this.serveyId,
     this.bracket,
+    this.description,
     // this.customer,
     this.package,
     this.staff,
     // this.acceptance,
-    // this.feedback,
+    this.feedback,
     // this.paymentProcess,
     // this.process,
     // this.warrantyReport,
@@ -61,8 +66,10 @@ class ConstructionContract {
     staffid = json['staffid'];
     packageId = json['packageId'];
     bracketId = json['bracketId'];
+    serveyId = json['serveyId'];
     bracket =
         json['bracket'] != null ? Bracket.fromJson(json['bracket']) : null;
+    description = json['description'];
     // customer = json['customer'] != null
     //     ? new Customer.fromJson(json['customer'])
     //     : null;
@@ -75,12 +82,12 @@ class ConstructionContract {
         acceptance!.add(Acceptance.fromJson(v));
       });
     }
-    // if (json['feedback'] != null) {
-    //   feedback = <Null>[];
-    //   json['feedback'].forEach((v) {
-    //     feedback!.add(new Null.fromJson(v));
-    //   });
-    // }
+    if (json['feedback'] != null) {
+      feedback = <Feedback>[];
+      json['feedback'].forEach((v) {
+        feedback!.add(Feedback.fromJson(v));
+      });
+    }
     if (json['paymentProcess'] != null) {
       paymentProcess = <PaymentProcess>[];
       json['paymentProcess'].forEach((v) {
@@ -114,9 +121,11 @@ class ConstructionContract {
     data['staffid'] = staffid;
     data['packageId'] = packageId;
     data['bracketId'] = bracketId;
+    data['serveyId'] = serveyId;
     if (bracket != null) {
       data['bracket'] = bracket?.toJson();
     }
+    data['description'] = description;
     // if (customer != null) {
     //   data['customer'] = customer!.toJson();
     // }
@@ -129,9 +138,9 @@ class ConstructionContract {
     if (acceptance != null) {
       data['acceptance'] = acceptance?.map((v) => v.toJson()).toList();
     }
-    // if (feedback != null) {
-    //   data['feedback'] = feedback!.map((v) => v.toJson()).toList();
-    // }
+    if (feedback != null) {
+      data['feedback'] = feedback?.map((v) => v.toJson()).toList();
+    }
     if (paymentProcess != null) {
       data['paymentProcess'] = paymentProcess?.map((v) => v.toJson()).toList();
     }

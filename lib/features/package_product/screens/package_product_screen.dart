@@ -220,7 +220,7 @@ class _PackageProductScreenState extends State<PackageProductScreen> {
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          'Hoá đơn tiền điện: ${formatCurrency(package.electricBill!)}',
+                          'Hoá đơn điện: ${formatCurrency(package.electricBill!)}',
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ],

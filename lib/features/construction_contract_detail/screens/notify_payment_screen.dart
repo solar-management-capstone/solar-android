@@ -2,11 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:mobile_solar_mp/common/widgets/custom_button.dart';
 import 'package:mobile_solar_mp/constants/app_color.dart';
 import 'package:mobile_solar_mp/constants/routes.dart';
+import 'package:mobile_solar_mp/features/construction_contract_detail/screens/construction_contract_detail_screen.dart';
 import 'package:mobile_solar_mp/features/navigation_bar/navigation_bar_app.dart';
+import 'package:mobile_solar_mp/models/construction_contract.dart';
 
 class NotifyPaymentScreen extends StatelessWidget {
   static const String routeName = RoutePath.notifyPaymentRoute;
-  const NotifyPaymentScreen({super.key});
+
+  ConstructionContract? constructionContract;
+
+  NotifyPaymentScreen({
+    super.key,
+    this.constructionContract,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,12 +41,13 @@ class NotifyPaymentScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50.0),
               child: CustomButton(
-                text: 'Quay về màn hình chính',
+                text: 'Quay về màn hình chi tiết hợp đồng',
                 onTap: () => Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => NavigationBarApp(
-                      pageIndex: 0,
+                    builder: (context) => ConstructionContractDetailScreen(
+                      constructionContract: constructionContract,
+                      isReloadData: true,
                     ),
                   ),
                   (route) => false,

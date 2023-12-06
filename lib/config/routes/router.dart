@@ -38,7 +38,7 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
           builder: (_) => const ConstructionContractScreen());
     case ConstructionContractDetailScreen.routeName:
       return MaterialPageRoute(
-          builder: (_) => const ConstructionContractDetailScreen());
+          builder: (_) => ConstructionContractDetailScreen());
     case HistoryConstructionContractScreen.routeName:
       return MaterialPageRoute(
           builder: (_) => const HistoryConstructionContractScreen());
@@ -55,7 +55,7 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
     case ChangePasswordScreen.routeName:
       return MaterialPageRoute(builder: (_) => const ChangePasswordScreen());
     case NotifyPaymentScreen.routeName:
-      return MaterialPageRoute(builder: (_) => const NotifyPaymentScreen());
+      return MaterialPageRoute(builder: (_) => NotifyPaymentScreen());
     default:
       return MaterialPageRoute(
         builder: (_) => const Scaffold(

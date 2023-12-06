@@ -264,29 +264,29 @@ Widget _buildContract(
                           : const SizedBox()
                     ],
                   ),
-                  constructionContract.status == '3'
-                      ? ElevatedButton(
-                          onPressed: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => FeedbackScreen(
-                                constructionContract: constructionContract,
-                              ),
-                            ),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            minimumSize: const Size(20, 20),
-                            backgroundColor: Colors.white,
-                            side: const BorderSide(color: Colors.red),
-                            shadowColor: Colors.grey,
-                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          ),
-                          child: const Text(
-                            'Đánh giá',
-                            style: TextStyle(color: Colors.red),
-                          ),
-                        )
-                      : const SizedBox(),
+                  // constructionContract.status == '3'
+                  //     ? ElevatedButton(
+                  //         onPressed: () => Navigator.push(
+                  //           context,
+                  //           MaterialPageRoute(
+                  //             builder: (_) => FeedbackScreen(
+                  //               constructionContract: constructionContract,
+                  //             ),
+                  //           ),
+                  //         ),
+                  //         style: ElevatedButton.styleFrom(
+                  //           minimumSize: const Size(20, 20),
+                  //           backgroundColor: Colors.white,
+                  //           side: const BorderSide(color: Colors.red),
+                  //           shadowColor: Colors.grey,
+                  //           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  //         ),
+                  //         child: const Text(
+                  //           'Đánh giá',
+                  //           style: TextStyle(color: Colors.red),
+                  //         ),
+                  //       )
+                  //     : const SizedBox(),
                 ],
               )
             ],

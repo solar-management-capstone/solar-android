@@ -93,13 +93,16 @@ class ConstructionContractDetailService {
   }) async {
     ConstructionContract constructionContract =
         await getConstructionContractById(
-            context: context, constructionContractId: constructionContractId);
+      context: context,
+      constructionContractId: constructionContractId,
+    );
     constructionContract.status = '0';
 
     final response = await HttpClient.http.put(
       Uri.parse(
-          '$uri/ConstructionContract/Update-construction-contract-with-id'),
-      body: constructionContract,
+        '$uri/ConstructionContract/Update-construction-contract-with-id',
+      ),
+      body: json.encode(constructionContract),
     );
 
     if (context.mounted) {

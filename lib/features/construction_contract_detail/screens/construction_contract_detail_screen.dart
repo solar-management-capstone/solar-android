@@ -645,28 +645,11 @@ class ConstructionContractDetailScreenState
                       ),
                     ),
                   ),
-                if (constructionContract.status == '3')
-                  Container(
-                    padding: const EdgeInsets.all(8.0),
-                    color: Colors.white,
-                    child: ElevatedButton(
-                      onPressed: () => _handlePayment(
-                        constructionContractId:
-                            constructionContract.constructioncontractId!,
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(double.infinity, 50),
-                      ),
-                      child: const Text(
-                        'Tất toán',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-
                 if (constructionContract.status == '3' &&
+                    constructionContract.paymentProcess?.length == 2 &&
+                    constructionContract.feedback?.length == 1)
+                  const SizedBox()
+                else if (constructionContract.status == '3' &&
                     constructionContract.paymentProcess?.length == 2)
                   Container(
                     padding: const EdgeInsets.all(8.0),
@@ -690,12 +673,32 @@ class ConstructionContractDetailScreenState
                         ),
                       ),
                     ),
-                  ),
+                  )
+                else if (constructionContract.status == '3')
+                    Container(
+                      padding: const EdgeInsets.all(8.0),
+                      color: Colors.white,
+                      child: ElevatedButton(
+                        onPressed: () => _handlePayment(
+                          constructionContractId:
+                          constructionContract.constructioncontractId!,
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(double.infinity, 50),
+                        ),
+                        child: const Text(
+                          'Tất toán',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    )
 
-                if (constructionContract.status == '3' &&
-                    constructionContract.paymentProcess?.length == 2 &&
-                    constructionContract.feedback?.length == 1)
-                  const SizedBox()
+                else if (constructionContract.status == '3' &&
+                      constructionContract.paymentProcess?.length == 2 &&
+                      constructionContract.feedback?.length == 1)
+                    const SizedBox()
               ],
             ),
     );

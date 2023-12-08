@@ -268,11 +268,15 @@ class _PackageProductScreenState extends State<PackageProductScreen> {
                               ],
                             ),
                           ),
-                    const SizedBox(height: 10.0),
-                    Text(
-                      'Giảm giá từ ngày ${formatDate(package.promotion!.startDate!)} đến ngày ${formatDate(package.promotion!.endDate!)}',
-                      style: const TextStyle(color: Colors.red),
-                    ),
+                    package.promotion != null
+                        ? const SizedBox(height: 10.0)
+                        : const SizedBox(),
+                    package.promotion != null
+                        ? Text(
+                            'Giảm giá từ ngày ${formatDate(package.promotion!.startDate!)} đến ngày ${formatDate(package.promotion!.endDate!)}',
+                            style: const TextStyle(color: Colors.red),
+                          )
+                        : const SizedBox(),
                     const SizedBox(height: 10.0),
                     const Text(
                       'Danh sách sản phẩm:',

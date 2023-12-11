@@ -109,7 +109,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             const Center(
                 child: Text(
-              'Hotline: 0909643365',
+              'Liên hệ hỗ trợ: 0909643365',
               style: TextStyle(
                 color: Colors.red,
                 fontWeight: FontWeight.bold,

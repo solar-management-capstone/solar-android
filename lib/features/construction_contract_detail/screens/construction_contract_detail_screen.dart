@@ -560,7 +560,7 @@ class ConstructionContractDetailScreenState
                             height: 8.0,
                           ),
                           const Text(
-                            'Liên hệ bảo hành: 0909643365',
+                            'Liên hệ hỗ trợ: 0909643365',
                             style: TextStyle(
                               color: Colors.red,
                               fontWeight: FontWeight.bold,

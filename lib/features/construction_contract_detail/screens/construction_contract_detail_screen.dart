@@ -270,21 +270,44 @@ class ConstructionContractDetailScreenState
                                               style: TextStyle(
                                                   color: Colors.green),
                                             )
-                                          : constructionContract.status == '2'
+                                          : constructionContract.status ==
+                                                      '2' &&
+                                                  DateTime.parse(
+                                                              constructionContract
+                                                                  .startdate!)
+                                                          .compareTo(
+                                                        DateTime.now(),
+                                                      ) <
+                                                      0
                                               ? const Text(
-                                                  'Hoạt động',
+                                                  'Hợp đồng mới',
                                                   style: TextStyle(
                                                       color: Colors.blue),
                                                 )
                                               : constructionContract.status ==
-                                                      '3'
+                                                          '2' &&
+                                                      DateTime.parse(
+                                                                  constructionContract
+                                                                      .startdate!)
+                                                              .compareTo(
+                                                            DateTime.now(),
+                                                          ) >=
+                                                          0
                                                   ? const Text(
-                                                      'Hoàn thành',
+                                                      'Đang thi công',
                                                       style: TextStyle(
-                                                          color: Colors
-                                                              .deepPurple),
+                                                          color: Colors.blue),
                                                     )
-                                                  : const SizedBox(),
+                                                  : constructionContract
+                                                              .status ==
+                                                          '3'
+                                                      ? const Text(
+                                                          'Hoàn thành',
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .deepPurple),
+                                                        )
+                                                      : const SizedBox(),
                                 )
                               ]),
                           Padding(
@@ -624,8 +647,9 @@ class ConstructionContractDetailScreenState
                       ),
                     ),
                   ),
-
-                if (constructionContract.status == '2')
+                if(constructionContract.status == '2' && constructionContract.paymentProcess?.length == 1)
+                  const SizedBox()
+                else if (constructionContract.status == '2')
                   Container(
                     padding: const EdgeInsets.all(8.0),
                     color: Colors.white,
@@ -675,30 +699,29 @@ class ConstructionContractDetailScreenState
                     ),
                   )
                 else if (constructionContract.status == '3')
-                    Container(
-                      padding: const EdgeInsets.all(8.0),
-                      color: Colors.white,
-                      child: ElevatedButton(
-                        onPressed: () => _handlePayment(
-                          constructionContractId:
-                          constructionContract.constructioncontractId!,
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(double.infinity, 50),
-                        ),
-                        child: const Text(
-                          'Tất toán',
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
+                  Container(
+                    padding: const EdgeInsets.all(8.0),
+                    color: Colors.white,
+                    child: ElevatedButton(
+                      onPressed: () => _handlePayment(
+                        constructionContractId:
+                            constructionContract.constructioncontractId!,
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(double.infinity, 50),
+                      ),
+                      child: const Text(
+                        'Tất toán',
+                        style: TextStyle(
+                          color: Colors.white,
                         ),
                       ),
-                    )
-
+                    ),
+                  )
                 else if (constructionContract.status == '3' &&
-                      constructionContract.paymentProcess?.length == 2 &&
-                      constructionContract.feedback?.length == 1)
-                    const SizedBox()
+                    constructionContract.paymentProcess?.length == 2 &&
+                    constructionContract.feedback?.length == 1)
+                  const SizedBox()
               ],
             ),
     );

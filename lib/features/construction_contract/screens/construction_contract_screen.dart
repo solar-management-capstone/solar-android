@@ -244,21 +244,37 @@ Widget _buildContract(
                               style: TextStyle(color: Colors.red),
                             )
                           : const SizedBox(),
-                      constructionContract.status == '1'
+                      // constructionContract.status == '1'
+                      //     ? const Text(
+                      //         'Chờ duyệt',
+                      //         style: TextStyle(color: Colors.green),
+                      //       )
+                      //     : const SizedBox(),
+                      constructionContract.status == '2' &&
+                              DateTime.parse(constructionContract.startdate!)
+                                      .compareTo(
+                                    DateTime.now(),
+                                  ) <
+                                  0
                           ? const Text(
-                              'Chờ duyệt',
-                              style: TextStyle(color: Colors.green),
+                              'Hợp đồng mới',
+                              style: TextStyle(color: Colors.blue),
                             )
                           : const SizedBox(),
-                      constructionContract.status == '2'
+                      constructionContract.status == '2' &&
+                              DateTime.parse(constructionContract.startdate!)
+                                      .compareTo(
+                                    DateTime.now(),
+                                  ) >=
+                                  0
                           ? const Text(
-                              'Hoạt động',
+                              'Đang thi công',
                               style: TextStyle(color: Colors.blue),
                             )
                           : const SizedBox(),
                       constructionContract.status == '3'
                           ? const Text(
-                              'Hoàn thành',
+                              'Hoàn tất',
                               style: TextStyle(color: Colors.deepPurple),
                             )
                           : const SizedBox()

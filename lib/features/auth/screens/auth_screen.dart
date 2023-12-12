@@ -355,8 +355,8 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                   if (value!.trim().isEmpty) {
                     return 'Vui lòng nhập mật khẩu';
                   } else {
-                    if (value.trim().length < 6 || value.trim().length > 8) {
-                      return 'Mật khẩu phải có độ dài 6 đến 8 kí tự';
+                    if (value.trim().length < 6) {
+                      return 'Mật khẩu phải có độ dài 6 kí tự trở lên';
                     }
                   }
                   return null;

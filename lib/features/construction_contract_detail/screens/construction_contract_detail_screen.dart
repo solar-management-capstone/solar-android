@@ -296,13 +296,13 @@ class ConstructionContractDetailScreenState
                                                   ? const Text(
                                                       'Đang thi công',
                                                       style: TextStyle(
-                                                          color: Colors.blue),
+                                                          color: Colors.green),
                                                     )
                                                   : constructionContract
                                                               .status ==
                                                           '3'
                                                       ? const Text(
-                                                          'Hoàn thành',
+                                                          'Hoàn tất',
                                                           style: TextStyle(
                                                               color: Colors
                                                                   .deepPurple),

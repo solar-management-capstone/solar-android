@@ -269,7 +269,7 @@ Widget _buildContract(
                                   0
                           ? const Text(
                               'Đang thi công',
-                              style: TextStyle(color: Colors.blue),
+                              style: TextStyle(color: Colors.green),
                             )
                           : const SizedBox(),
                       constructionContract.status == '3'

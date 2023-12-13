@@ -6,11 +6,13 @@ import 'package:mobile_solar_mp/common/handle_exception/bad_request_exception.da
 import 'package:mobile_solar_mp/constants/routes.dart';
 import 'package:mobile_solar_mp/constants/utils.dart';
 import 'package:mobile_solar_mp/features/construction_contract/screens/feedback_screen.dart';
+import 'package:mobile_solar_mp/features/construction_contract/service/construction_contract_service.dart';
 import 'package:mobile_solar_mp/features/construction_contract_detail/screens/web_view_container.dart';
 import 'package:mobile_solar_mp/features/construction_contract_detail/service/construction_contract_detail_service.dart';
 import 'package:mobile_solar_mp/features/history_construction_contract/screens/history_construction_contract.dart';
 import 'package:mobile_solar_mp/features/navigation_bar/navigation_bar_app.dart';
 import 'package:mobile_solar_mp/models/acceptance.dart';
+import 'package:mobile_solar_mp/models/bracket.dart';
 import 'package:mobile_solar_mp/models/construction_contract.dart';
 import 'package:mobile_solar_mp/models/payment.dart';
 import 'package:mobile_solar_mp/models/product.dart';
@@ -43,6 +45,7 @@ class ConstructionContractDetailScreenState
   ConstructionContract constructionContract;
   int? index;
   bool isReloadData;
+  // List<Payment> payment = [];
 
   ConstructionContractDetailScreenState({
     required this.constructionContract,
@@ -113,7 +116,22 @@ class ConstructionContractDetailScreenState
         });
       });
     }
+
+    // _handleGetPayment();
   }
+
+  // void _handleGetPayment() async {
+  //   List<Payment> paymentResponse =
+  //       await ConstructionContractDetailService().getPayment(
+  //     context: context,
+  //     constructionContractId:
+  //         widget.constructionContract!.constructioncontractId!,
+  //   );
+
+  //   setState(() {
+  //     payment = paymentResponse;
+  //   });
+  // }
 
   void _handlePayment({
     required String constructionContractId,
@@ -238,6 +256,10 @@ class ConstructionContractDetailScreenState
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Text(
+                            'Mã số hợp đồng: ${constructionContract.constructioncontractId}',
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
                           Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -277,7 +299,8 @@ class ConstructionContractDetailScreenState
                                                                   .startdate!)
                                                           .compareTo(
                                                         DateTime.now(),
-                                                      ) <
+                                                        // ) <
+                                                      ) >=
                                                       0
                                               ? const Text(
                                                   'Hợp đồng mới',
@@ -291,7 +314,8 @@ class ConstructionContractDetailScreenState
                                                                       .startdate!)
                                                               .compareTo(
                                                             DateTime.now(),
-                                                          ) >=
+                                                            // ) >=
+                                                          ) <
                                                           0
                                                   ? const Text(
                                                       'Đang thi công',
@@ -436,34 +460,8 @@ class ConstructionContractDetailScreenState
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(height: 8.0),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 16.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('${constructionContract.bracket?.name}'),
-                                // Row(
-                                //   children: [
-                                //     const Text('Giá: '),
-                                //     Text(
-                                //       formatCurrency(
-                                //           constructionContract.bracket!.price!),
-                                //       style: const TextStyle(color: Colors.red),
-                                //     )
-                                //   ],
-                                // ),
-                                Text(
-                                  'Nhà sản xuất: ${constructionContract.bracket?.manufacturer}',
-                                ),
-                                Text(
-                                  'Vật liệu: ${constructionContract.bracket?.material}',
-                                ),
-                                Text(
-                                  'Kích thước: ${constructionContract.bracket?.size}',
-                                ),
-                              ],
-                            ),
+                          _buildBracketWidget(
+                            constructionContract.bracket!,
                           ),
                           const SizedBox(
                             height: 8.0,
@@ -647,7 +645,31 @@ class ConstructionContractDetailScreenState
                       ),
                     ),
                   ),
-                if(constructionContract.status == '2' && constructionContract.paymentProcess?.length == 1)
+                if (constructionContract.status == '2' &&
+                    constructionContract.paymentProcess?.length == 1 &&
+                    constructionContract.paymentProcess?[0].isDeposit == true &&
+                    constructionContract.paymentProcess?[0].status == 'Paid')
+                  Container(
+                    padding: const EdgeInsets.all(8.0),
+                    color: Colors.white,
+                    child: ElevatedButton(
+                      onPressed: () => _handlePayment(
+                        constructionContractId:
+                            constructionContract.constructioncontractId!,
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(double.infinity, 50),
+                      ),
+                      child: const Text(
+                        'Đặt cọc',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  )
+                else if (constructionContract.status == '2' &&
+                    constructionContract.paymentProcess?.length == 1)
                   const SizedBox()
                 else if (constructionContract.status == '2')
                   Container(
@@ -669,10 +691,35 @@ class ConstructionContractDetailScreenState
                       ),
                     ),
                   ),
+
                 if (constructionContract.status == '3' &&
                     constructionContract.paymentProcess?.length == 2 &&
                     constructionContract.feedback?.length == 1)
                   const SizedBox()
+                else if (constructionContract.status == '3' &&
+                    constructionContract.paymentProcess?.length == 2 &&
+                    constructionContract.paymentProcess?[1].isDeposit ==
+                        false &&
+                    constructionContract.paymentProcess?[1].status == 'Paid')
+                  Container(
+                    padding: const EdgeInsets.all(8.0),
+                    color: Colors.white,
+                    child: ElevatedButton(
+                      onPressed: () => _handlePayment(
+                        constructionContractId:
+                            constructionContract.constructioncontractId!,
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(double.infinity, 50),
+                      ),
+                      child: const Text(
+                        'Tất toán',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  )
                 else if (constructionContract.status == '3' &&
                     constructionContract.paymentProcess?.length == 2)
                   Container(
@@ -776,7 +823,7 @@ class ConstructionContractDetailScreenState
 //                 disposeLevel: DisposeLevel.High,
 //                 child: Center(
 //                   child: Hero(
-//                     tag: 'image-${Random().nextInt(100)}',
+//                     tag: 'image-${Random().nextInt(1000)}',
 //                     child: ClipRRect(
 //                       borderRadius: BorderRadius.circular(16.0),
 //                       child: Image.network(
@@ -828,9 +875,25 @@ Widget _buildPaymentProcess(ConstructionContract constructionContract) {
                     constructionContract.paymentProcess![index].amount!,
                   ),
                   style: const TextStyle(color: Colors.red),
-                )
+                ),
               ],
             ),
+            constructionContract.paymentProcess![index].status == 'Paid' &&
+                    constructionContract.paymentProcess![index].isDeposit ==
+                        true
+                ? const Text(
+                    ' (Thanh toán chưa thành công)',
+                    style: TextStyle(color: Colors.red),
+                  )
+                : const Text(''),
+            constructionContract.paymentProcess![index].status == 'Paid' &&
+                    constructionContract.paymentProcess![index].isDeposit ==
+                        false
+                ? const Text(
+                    ' (Thanh toán chưa thành công)',
+                    style: TextStyle(color: Colors.red),
+                  )
+                : const Text('')
           ],
         );
       },
@@ -910,7 +973,7 @@ Widget _buildProductWidget(Product product, int quantity) {
                   disposeLevel: DisposeLevel.High,
                   child: Center(
                     child: Hero(
-                      tag: 'image-${Random().nextInt(100)}',
+                      tag: 'image-${Random().nextInt(1000)}',
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(16.0),
                         child: Image.network(
@@ -956,6 +1019,64 @@ Widget _buildProductWidget(Product product, int quantity) {
         //     fontWeight: FontWeight.bold,
         //   ),
         // ),
+      ],
+    ),
+  );
+}
+
+Widget _buildBracketWidget(Bracket bracket) {
+  return Container(
+    color: Colors.grey[200],
+    padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: bracket.image!.isNotEmpty ? 200.0 : 0,
+          width: double.infinity,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            itemCount: bracket.image?.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Container(
+                padding: const EdgeInsets.only(right: 10.0),
+                child: FullScreenWidget(
+                  disposeLevel: DisposeLevel.High,
+                  child: Center(
+                    child: Hero(
+                      tag: 'image-${Random().nextInt(1000)}',
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(16.0),
+                        child: Image.network(
+                          bracket.image![index].imageData!,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+        const SizedBox(height: 20.0),
+        Text(
+          bracket.name!,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 10.0),
+        Text(
+          'Nhà sản xuất: ${bracket.manufacturer}',
+        ),
+        const SizedBox(height: 10.0),
+        Text(
+          'Vật liệu: ${bracket.material}',
+        ),
+        const SizedBox(height: 10.0),
+        Text(
+          'Kích thước: ${bracket.size}',
+        ),
       ],
     ),
   );

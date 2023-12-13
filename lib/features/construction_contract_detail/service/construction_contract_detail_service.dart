@@ -63,6 +63,37 @@ class ConstructionContractDetailService {
     return payment;
   }
 
+  Future<List<Payment>> getPayment({
+    required BuildContext context,
+    required String constructionContractId,
+  }) async {
+    List<Payment> listPayment = [];
+    final response = await HttpClient.http.get(
+      Uri.parse(
+        '$uri/Payment/get-payment-contract?contractId=$constructionContractId',
+      ),
+    );
+
+    if (context.mounted) {
+      httpErrorHandle(
+        response: response,
+        context: context,
+        onSuccess: () {
+          final data = json.decode(response.body);
+          if (data['data'] != null) {
+            for (var i = 0; i < data['data']?.length; i++) {
+              final entry = data['data'][i];
+              Payment payment = Payment.fromJson(entry);
+              listPayment.add(payment);
+            }
+          }
+        },
+      );
+    }
+
+    return listPayment;
+  }
+
   Future<String> getUrlVnPay({
     required BuildContext context,
     required String paymentId,

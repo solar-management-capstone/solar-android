@@ -218,34 +218,49 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomTextField(
-            controller: _usernameController,
-            hintText: 'Số điện thoại',
-            keyboardType: TextInputType.phone,
+          Expanded(
+            child: Column(
+              children: [
+                CustomTextField(
+                  controller: _usernameController,
+                  hintText: 'Số điện thoại',
+                  keyboardType: TextInputType.phone,
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                CustomTextField(
+                  controller: _passwordController,
+                  hintText: 'Mật khẩu',
+                  obscureText: true,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  child: ElevatedButton(
+                    onPressed: _isLoading
+                        ? null
+                        : () {
+                            if (_formKeySignIn.currentState!.validate()) {
+                              signInUser();
+                            }
+                          },
+                    style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(double.infinity, 50)),
+                    child: _isLoading
+                        ? const CircularProgressIndicator()
+                        : const Text('Đăng nhập'),
+                  ),
+                ),
+              ],
+            ),
           ),
-          const SizedBox(
-            height: 20.0,
-          ),
-          CustomTextField(
-            controller: _passwordController,
-            hintText: 'Mật khẩu',
-            obscureText: true,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
-            child: ElevatedButton(
-              onPressed: _isLoading
-                  ? null
-                  : () {
-                      if (_formKeySignIn.currentState!.validate()) {
-                        signInUser();
-                      }
-                    },
-              style: ElevatedButton.styleFrom(
-                  minimumSize: const Size(double.infinity, 50)),
-              child: _isLoading
-                  ? const CircularProgressIndicator()
-                  : const Text('Đăng nhập'),
+          const Center(
+            child: Text(
+              'Liên hệ hỗ trợ: 0909643365',
+              style: TextStyle(
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ],

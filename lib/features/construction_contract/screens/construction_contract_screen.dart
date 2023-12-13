@@ -218,7 +218,7 @@ Widget _buildContract(
             children: [
               Row(
                 children: [
-                  Text(
+                  const Text(
                     'Thời hạn HĐ ',
                   ),
                   Text(
@@ -244,17 +244,18 @@ Widget _buildContract(
                               style: TextStyle(color: Colors.red),
                             )
                           : const SizedBox(),
-                      // constructionContract.status == '1'
-                      //     ? const Text(
-                      //         'Chờ duyệt',
-                      //         style: TextStyle(color: Colors.green),
-                      //       )
-                      //     : const SizedBox(),
+                      constructionContract.status == '1'
+                          ? const Text(
+                              'Chờ duyệt',
+                              style: TextStyle(color: Colors.green),
+                            )
+                          : const SizedBox(),
                       constructionContract.status == '2' &&
                               DateTime.parse(constructionContract.startdate!)
                                       .compareTo(
                                     DateTime.now(),
-                                  ) <
+                                  // ) <
+                                  ) >=
                                   0
                           ? const Text(
                               'Hợp đồng mới',
@@ -265,7 +266,8 @@ Widget _buildContract(
                               DateTime.parse(constructionContract.startdate!)
                                       .compareTo(
                                     DateTime.now(),
-                                  ) >=
+                                  // ) >=
+                                  ) <
                                   0
                           ? const Text(
                               'Đang thi công',

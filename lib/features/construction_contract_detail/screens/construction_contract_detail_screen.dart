@@ -257,7 +257,7 @@ class ConstructionContractDetailScreenState
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Mã số hợp đồng: ${constructionContract.constructioncontractId}',
+                            'Mã hợp đồng: ${constructionContract.constructioncontractId}',
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Row(

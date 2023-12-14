@@ -150,7 +150,7 @@ class ConstructionContractDetailScreenState
         );
 
         if (mounted) {
-          Navigator.pushAndRemoveUntil(
+          Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => WebViewContainer(
@@ -158,7 +158,6 @@ class ConstructionContractDetailScreenState
                 constructionContract: widget.constructionContract!,
               ),
             ),
-            (route) => false,
           );
         }
       }
@@ -261,79 +260,78 @@ class ConstructionContractDetailScreenState
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text(
-                                  'Nhân viên:',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.all(8.0),
-                                  decoration: const BoxDecoration(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(8.0),
-                                    ),
-                                    border: Border.fromBorderSide(
-                                      BorderSide(
-                                        width: 1.0,
-                                        color: Colors.black54,
-                                        style: BorderStyle.solid,
-                                      ),
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                'Nhân viên:',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.all(8.0),
+                                decoration: const BoxDecoration(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(8.0),
+                                  ),
+                                  border: Border.fromBorderSide(
+                                    BorderSide(
+                                      width: 1.0,
+                                      color: Colors.black54,
+                                      style: BorderStyle.solid,
                                     ),
                                   ),
-                                  child: constructionContract.status == '0'
-                                      ? const Text(
-                                          'Đã huỷ',
-                                          style: TextStyle(color: Colors.red),
-                                        )
-                                      : constructionContract.status == '1'
-                                          ? const Text(
-                                              'Chờ duyệt',
-                                              style: TextStyle(
-                                                  color: Colors.green),
-                                            )
-                                          : constructionContract.status ==
-                                                      '2' &&
-                                                  DateTime.parse(
-                                                              constructionContract
-                                                                  .startdate!)
-                                                          .compareTo(
-                                                        DateTime.now(),
-                                                        // ) <
-                                                      ) >=
-                                                      0
-                                              ? const Text(
-                                                  'Hợp đồng mới',
-                                                  style: TextStyle(
-                                                      color: Colors.blue),
-                                                )
-                                              : constructionContract.status ==
-                                                          '2' &&
-                                                      DateTime.parse(
-                                                                  constructionContract
-                                                                      .startdate!)
-                                                              .compareTo(
-                                                            DateTime.now(),
-                                                            // ) >=
-                                                          ) <
-                                                          0
-                                                  ? const Text(
-                                                      'Đang thi công',
-                                                      style: TextStyle(
-                                                          color: Colors.green),
-                                                    )
-                                                  : constructionContract
-                                                              .status ==
-                                                          '3'
-                                                      ? const Text(
-                                                          'Hoàn tất',
-                                                          style: TextStyle(
-                                                              color: Colors
-                                                                  .deepPurple),
-                                                        )
-                                                      : const SizedBox(),
-                                )
-                              ]),
+                                ),
+                                child: constructionContract.status == '0'
+                                    ? const Text(
+                                        'Đã huỷ',
+                                        style: TextStyle(color: Colors.red),
+                                      )
+                                    : constructionContract.status == '1'
+                                        ? const Text(
+                                            'Chờ duyệt',
+                                            style:
+                                                TextStyle(color: Colors.green),
+                                          )
+                                        : constructionContract.status == '2' &&
+                                                DateTime.parse(
+                                                            constructionContract
+                                                                .startdate!)
+                                                        .compareTo(
+                                                      DateTime.now(),
+                                                      // ) <
+                                                    ) >=
+                                                    0
+                                            ? const Text(
+                                                'Hợp đồng mới',
+                                                style: TextStyle(
+                                                    color: Colors.blue),
+                                              )
+                                            : constructionContract.status ==
+                                                        '2' &&
+                                                    DateTime.parse(
+                                                                constructionContract
+                                                                    .startdate!)
+                                                            .compareTo(
+                                                          DateTime.now(),
+                                                          // ) >=
+                                                        ) <
+                                                        0
+                                                ? const Text(
+                                                    'Đang thi công',
+                                                    style: TextStyle(
+                                                        color: Colors.green),
+                                                  )
+                                                : constructionContract.status ==
+                                                        '3'
+                                                    ? const Text(
+                                                        'Hoàn tất',
+                                                        style: TextStyle(
+                                                            color: Colors
+                                                                .deepPurple),
+                                                      )
+                                                    : const SizedBox(),
+                              )
+                            ],
+                          ),
                           Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 16.0),

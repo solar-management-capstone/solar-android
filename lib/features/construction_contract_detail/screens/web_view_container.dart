@@ -51,15 +51,18 @@ class _WebViewContainerState extends State<WebViewContainer> {
             NavigationDelegate(
               onProgress: (int progress) {},
               onPageStarted: (String url) {
-                log(url);
+                log('start: $url');
               },
               onPageFinished: (String url) {
-                log(url);
+                log('finished: $url');
               },
-              onWebResourceError: (WebResourceError error) {},
+              onWebResourceError: (WebResourceError error) {
+                log(error.description);
+              },
               onNavigationRequest: (NavigationRequest request) {
+                log('navigation: ${request.url}');
                 if (request.url.startsWith(
-                  'https://solar-caps.azurewebsites.net/api/VNPay/PaymentConfirm',
+                  'https://admin-solar-hub.vercel.app/auth/login',
                 )) {
                   Navigator.pushAndRemoveUntil(
                     context,

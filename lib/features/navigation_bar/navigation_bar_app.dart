@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mobile_solar_mp/constants/app_color.dart';
 import 'package:mobile_solar_mp/constants/routes.dart';
 import 'package:mobile_solar_mp/features/chat/screens/chat_detail_screen.dart';
-import 'package:mobile_solar_mp/features/chat/screens/chat_screen.dart';
 import 'package:mobile_solar_mp/features/construction_contract/screens/construction_contract_screen.dart';
 import 'package:mobile_solar_mp/features/home/screens/home_screen.dart';
 import 'package:mobile_solar_mp/features/package/screens/package_screen.dart';
@@ -65,7 +64,7 @@ class _NavigationBarAppState extends State<NavigationBarApp> {
         currentIndex: _currentPageIndex,
         onTap: _onItemTapped,
       ),
-      body:  [
+      body: [
         const HomeScreen(),
         const PackageScreen(),
         const ConstructionContractScreen(),

@@ -692,8 +692,27 @@ class ConstructionContractDetailScreenState
 
                 if (constructionContract.status == '3' &&
                     constructionContract.paymentProcess?.length == 2 &&
-                    constructionContract.feedback?.length == 1)
-                  const SizedBox()
+                    constructionContract.paymentProcess?[1].isDeposit == true &&
+                    constructionContract.paymentProcess?[1].status == 'success')
+                  Container(
+                    padding: const EdgeInsets.all(8.0),
+                    color: Colors.white,
+                    child: ElevatedButton(
+                      onPressed: () => _handlePayment(
+                        constructionContractId:
+                            constructionContract.constructioncontractId!,
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(double.infinity, 50),
+                      ),
+                      child: const Text(
+                        'Tất toán',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  )
                 else if (constructionContract.status == '3' &&
                     constructionContract.paymentProcess?.length == 2 &&
                     constructionContract.paymentProcess?[1].isDeposit ==
@@ -719,7 +738,12 @@ class ConstructionContractDetailScreenState
                     ),
                   )
                 else if (constructionContract.status == '3' &&
-                    constructionContract.paymentProcess?.length == 2)
+                    constructionContract.paymentProcess?.length == 2 &&
+                    constructionContract.paymentProcess?[1].isDeposit ==
+                        false &&
+                    constructionContract.paymentProcess?[1].status ==
+                        'success' &&
+                    constructionContract.feedback!.isEmpty)
                   Container(
                     padding: const EdgeInsets.all(8.0),
                     color: Colors.white,
@@ -743,29 +767,7 @@ class ConstructionContractDetailScreenState
                       ),
                     ),
                   )
-                else if (constructionContract.status == '3')
-                  Container(
-                    padding: const EdgeInsets.all(8.0),
-                    color: Colors.white,
-                    child: ElevatedButton(
-                      onPressed: () => _handlePayment(
-                        constructionContractId:
-                            constructionContract.constructioncontractId!,
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(double.infinity, 50),
-                      ),
-                      child: const Text(
-                        'Tất toán',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  )
-                else if (constructionContract.status == '3' &&
-                    constructionContract.paymentProcess?.length == 2 &&
-                    constructionContract.feedback?.length == 1)
+                else
                   const SizedBox()
               ],
             ),

@@ -57,10 +57,12 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
     case NotifyPaymentSuccessScreen.routeName:
       return MaterialPageRoute(builder: (_) => NotifyPaymentSuccessScreen());
     default:
-      return MaterialPageRoute(
-        builder: (_) => const Scaffold(
-          body: Center(child: Text('Screen does not exist!')),
-        ),
-      );
+      return MaterialPageRoute(builder: (_) => NavigationBarApp());
+    // default:
+    //   return MaterialPageRoute(
+    //     builder: (_) => const Scaffold(
+    //       body: Center(child: Text('Screen does not exist!')),
+    //     ),
+    //   );
   }
 }

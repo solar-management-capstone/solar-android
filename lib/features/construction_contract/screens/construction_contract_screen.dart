@@ -195,6 +195,7 @@ Widget _buildContract(
               //       ? 'Khung đỡ: ${constructionContract.bracket!.name!.substring(0, 40)}...'
               //       : 'Khung đỡ: ${constructionContract.bracket?.name}',
               // ),
+              Text('Mã gói: ${constructionContract.constructioncontractId}'),
               Text(
                 constructionContract.package!.name!.length > 100
                     ? 'Gói: ${constructionContract.package!.name!.substring(0, 100)}...'
@@ -254,7 +255,7 @@ Widget _buildContract(
                               DateTime.parse(constructionContract.startdate!)
                                       .compareTo(
                                     DateTime.now(),
-                                  // ) <
+                                    // ) <
                                   ) >=
                                   0
                           ? const Text(
@@ -266,7 +267,7 @@ Widget _buildContract(
                               DateTime.parse(constructionContract.startdate!)
                                       .compareTo(
                                     DateTime.now(),
-                                  // ) >=
+                                    // ) >=
                                   ) <
                                   0
                           ? const Text(

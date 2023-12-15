@@ -19,5 +19,6 @@ class RoutePath {
   static const String chatRoute = '/chat';
   static const String chatDetailRoute = '/chatDetail';
   static const String changePasswordRoute = '/changePassword';
-  static const String notifyPaymentRoute = '/notifyPayment';
+  static const String notifyPaymentSuccessRoute = '/notifyPaymentSuccess';
+  static const String notifyPaymentFailedRoute = '/notifyPaymentFailed';
 }

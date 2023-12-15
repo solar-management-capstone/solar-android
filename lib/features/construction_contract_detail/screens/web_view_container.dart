@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:mobile_solar_mp/constants/routes.dart';
 import 'package:mobile_solar_mp/constants/utils.dart';
 import 'package:mobile_solar_mp/features/construction_contract_detail/screens/construction_contract_detail_screen.dart';
-import 'package:mobile_solar_mp/features/construction_contract_detail/screens/notify_payment_screen.dart';
+import 'package:mobile_solar_mp/features/construction_contract_detail/screens/notify_payment_failed_screen.dart';
+import 'package:mobile_solar_mp/features/construction_contract_detail/screens/notify_payment_success_screen.dart';
 import 'package:mobile_solar_mp/models/construction_contract.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -62,12 +63,25 @@ class _WebViewContainerState extends State<WebViewContainer> {
               onNavigationRequest: (NavigationRequest request) {
                 log('navigation: ${request.url}');
                 if (request.url.startsWith(
-                  'https://admin-solar-hub.vercel.app/auth/login',
+                  'https://admin-solar-hub.vercel.app/auth/login?status=success',
                 )) {
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => NotifyPaymentScreen(
+                      builder: (context) => NotifyPaymentSuccessScreen(
+                        constructionContract: constructionContract,
+                      ),
+                    ),
+                    (route) => false,
+                  );
+                  return NavigationDecision.prevent;
+                } else if (request.url.startsWith(
+                  'https://admin-solar-hub.vercel.app/auth/login?status=failed',
+                )) {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => NotifyPaymentFailedScreen(
                         constructionContract: constructionContract,
                       ),
                     ),

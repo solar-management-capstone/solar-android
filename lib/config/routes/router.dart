@@ -5,7 +5,7 @@ import 'package:mobile_solar_mp/features/chat/screens/chat_detail_screen.dart';
 import 'package:mobile_solar_mp/features/chat/screens/chat_screen.dart';
 import 'package:mobile_solar_mp/features/construction_contract/screens/construction_contract_screen.dart';
 import 'package:mobile_solar_mp/features/construction_contract_detail/screens/construction_contract_detail_screen.dart';
-import 'package:mobile_solar_mp/features/construction_contract_detail/screens/notify_payment_screen.dart';
+import 'package:mobile_solar_mp/features/construction_contract_detail/screens/notify_payment_success_screen.dart';
 import 'package:mobile_solar_mp/features/construction_contract_detail/screens/web_view_container.dart';
 import 'package:mobile_solar_mp/features/edit_profile/screens/edit_profile_screen.dart';
 import 'package:mobile_solar_mp/features/history_construction_contract/screens/feedback_screen.dart';
@@ -54,8 +54,8 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(builder: (_) => const ChatDetailScreen());
     case ChangePasswordScreen.routeName:
       return MaterialPageRoute(builder: (_) => const ChangePasswordScreen());
-    case NotifyPaymentScreen.routeName:
-      return MaterialPageRoute(builder: (_) => NotifyPaymentScreen());
+    case NotifyPaymentSuccessScreen.routeName:
+      return MaterialPageRoute(builder: (_) => NotifyPaymentSuccessScreen());
     default:
       return MaterialPageRoute(
         builder: (_) => const Scaffold(

@@ -7,6 +7,7 @@ class Feedback {
   String? description;
   String? createAt;
   bool? status;
+  int? rating;
   String? contructionContractId;
   String? accountId;
   String? image;
@@ -20,6 +21,7 @@ class Feedback {
     this.description,
     this.createAt,
     this.status,
+    this.rating,
     this.contructionContractId,
     this.accountId,
     this.image,
@@ -34,6 +36,7 @@ class Feedback {
     description = json['description'];
     createAt = json['createAt'];
     status = json['status'];
+    rating = json['rating'];
     contructionContractId = json['contructionContractId'];
     accountId = json['accountId'];
     image = json['image'];
@@ -53,6 +56,7 @@ class Feedback {
     data['description'] = description;
     data['createAt'] = createAt;
     data['status'] = status;
+    data['rating'] = rating;
     data['contructionContractId'] = contructionContractId;
     data['accountId'] = accountId;
     data['image'] = image;

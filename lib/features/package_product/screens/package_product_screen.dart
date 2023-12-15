@@ -440,7 +440,7 @@ class _PackageProductScreenState extends State<PackageProductScreen> {
     return Container(
       padding: const EdgeInsets.all(8.0),
       margin: const EdgeInsets.only(bottom: 8.0),
-      height: 80.0,
+      height: 100.0,
       decoration: BoxDecoration(
         color: Colors.white70,
         borderRadius: const BorderRadius.all(Radius.circular(8.0)),
@@ -465,7 +465,12 @@ class _PackageProductScreenState extends State<PackageProductScreen> {
                 style:
                     const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
-              Text('${feedback.description}'),
+              _buildQuantityIconStar(feedback.rating!),
+              Text(
+                feedback.description!.length > 40
+                    ? '${feedback.description!.substring(0, 40)}...'
+                    : feedback.description!,
+              )
             ],
           ),
           Text(
@@ -473,6 +478,20 @@ class _PackageProductScreenState extends State<PackageProductScreen> {
           )
         ],
       ),
+    );
+  }
+
+  Widget _buildQuantityIconStar(int length) {
+    List<Widget> icons = List.generate(
+      length,
+      (index) => const Icon(
+        Icons.star,
+        color: Colors.amber,
+      ),
+    );
+
+    return Row(
+      children: icons,
     );
   }
 

@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_solar_mp/common/widgets/custom_button.dart';
-import 'package:mobile_solar_mp/constants/app_color.dart';
 import 'package:mobile_solar_mp/constants/routes.dart';
 import 'package:mobile_solar_mp/features/construction_contract_detail/screens/construction_contract_detail_screen.dart';
-import 'package:mobile_solar_mp/features/navigation_bar/navigation_bar_app.dart';
 import 'package:mobile_solar_mp/models/construction_contract.dart';
 
-class NotifyPaymentScreen extends StatelessWidget {
-  static const String routeName = RoutePath.notifyPaymentRoute;
+class NotifyPaymentFailedScreen extends StatelessWidget {
+  static const String routeName = RoutePath.notifyPaymentFailedRoute;
 
   ConstructionContract? constructionContract;
 
-  NotifyPaymentScreen({
+  NotifyPaymentFailedScreen({
     super.key,
     this.constructionContract,
   });
@@ -29,12 +27,12 @@ class NotifyPaymentScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              'Bạn đã thanh toán hợp đồng thành công',
+              'Thanh toán hợp đồng không thành công',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
             ),
-            Icon(
-              Icons.check_circle,
-              color: AppColor.primary,
+            const Icon(
+              Icons.cancel_outlined,
+              color: Colors.red,
               size: 100.0,
             ),
             const SizedBox(height: 20.0),

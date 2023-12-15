@@ -1073,7 +1073,7 @@ Widget _buildBracketWidget(Bracket bracket) {
         ),
         const SizedBox(height: 10.0),
         Text(
-          'Kích thước: ${bracket.size}',
+          'Kích thước: ${bracket.size} m2',
         ),
       ],
     ),

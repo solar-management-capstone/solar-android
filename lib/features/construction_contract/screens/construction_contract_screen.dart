@@ -199,8 +199,9 @@ Widget _buildContract(
                 style: TextStyle(fontWeight: FontWeight.bold),),
               Text(
                 constructionContract.package!.name!.length > 100
-                    ? 'Gói: ${constructionContract.package!.name!.substring(0, 100)}...'
-                    : 'Gói: ${constructionContract.package?.name}',
+                    ? '${constructionContract.package!.name!.substring(0, 100)}...'
+                    : '${constructionContract.package?.name}',
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
               Row(
                 children: [

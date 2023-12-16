@@ -1,4 +1,4 @@
-String uri = 'https://solar-caps.azurewebsites.net/api';
+String uri = 'https://solar-cap.azurewebsites.net/api';
 
 class Item {
   final String label;

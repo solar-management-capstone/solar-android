@@ -352,8 +352,8 @@ class ConstructionContractDetailScreenState
                           const SizedBox(
                             height: 8.0,
                           ),
-                          const Text(
-                            'Gói:',
+                          Text(
+                            'Gói: ${constructionContract.package?.name}',
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Padding(
@@ -362,9 +362,10 @@ class ConstructionContractDetailScreenState
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('${constructionContract.package?.name}'),
+                                // Text('${constructionContract.package?.name}'),
                                 Text(
-                                  'Mô tả: ${constructionContract.package?.description}',
+                                  // 'Mô tả: ${constructionContract.package?.description}',
+                                  '${constructionContract.package?.description}',
                                 ),
                                 // Wrap(
                                 //   children: [

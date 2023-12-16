@@ -157,7 +157,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
       child: Scaffold(
         appBar: AppBar(
           title: const Text(
-            'Product Solar MP',
+            'Minh Phát',
           ),
           automaticallyImplyLeading: false,
           bottom: TabBar(

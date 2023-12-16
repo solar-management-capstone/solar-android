@@ -353,7 +353,7 @@ class ConstructionContractDetailScreenState
                             height: 8.0,
                           ),
                           Text(
-                            'Gói: ${constructionContract.package?.name}',
+                            'Thông tin gói: ',
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Padding(
@@ -362,10 +362,11 @@ class ConstructionContractDetailScreenState
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                // Text('${constructionContract.package?.name}'),
+                                Text('${constructionContract.package?.name}',
+                                style: TextStyle(fontWeight: FontWeight.bold),),
                                 Text(
                                   // 'Mô tả: ${constructionContract.package?.description}',
-                                  '${constructionContract.package?.description}',
+                                  '\n${constructionContract.package?.description}',
                                 ),
                                 // Wrap(
                                 //   children: [

@@ -195,7 +195,8 @@ Widget _buildContract(
               //       ? 'Khung đỡ: ${constructionContract.bracket!.name!.substring(0, 40)}...'
               //       : 'Khung đỡ: ${constructionContract.bracket?.name}',
               // ),
-              Text('Mã gói: ${constructionContract.constructioncontractId}'),
+              Text('Mã HĐ: ${constructionContract.constructioncontractId}',
+                style: TextStyle(fontWeight: FontWeight.bold),),
               Text(
                 constructionContract.package!.name!.length > 100
                     ? 'Gói: ${constructionContract.package!.name!.substring(0, 100)}...'

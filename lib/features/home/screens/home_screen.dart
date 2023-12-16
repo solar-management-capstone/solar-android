@@ -17,8 +17,16 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<String> listImageSlider = [
-    "https://media.baodautu.vn/Images/huutuan/2022/11/30/QC1.jpg",
-    "https://kenh14cdn.com/203336854389633024/2021/6/1/anh-chup-man-hinh-2021-06-01-luc-190139-16225506660211157797993-16225506948101621046346.png"
+    "https://www.dnxenergy.com.au/wp-content/uploads/2019/04/Yanchep_4-181012-4.jpg",
+    "https://solarfvengenharia.com/wp-content/uploads/2022/11/dscf0693-760x520.jpg",
+    "https://fujita-ec.com/wp-content/uploads/2019/05/bao-gia-nang-luong-mat-troi.jpg",
+    "https://insenergy.vn/Data/Sites/1/News/256/hybrid.jpeg",
+    "https://i1-sohoa.vnecdn.net/2021/11/18/170671421-2786909764881471-689-8869-7575-1637214806.jpg?w=680&h=0&q=100&dpr=2&fit=crop&s=CF4uOdVPs_ZPEYWoT9Ysdg",
+    "https://zsvsolar.com/wp-content/uploads/lap-dien-nang-luong-mat-troi-ap-mai-ha-noi.jpg",
+    "https://suntechsolar.vn/wp-content/uploads/2019/04/dien-mat-troi-ho-gia-dinh.jpg",
+    "https://imagev3.vietnamplus.vn/w660/Uploaded/2023/ngtnnn/2020_08_10/TTXVN_1008dienMT.jpg",
+    "https://vogiasolar.com/wp-content/uploads/2016/08/dien-mat-troi-4-1.jpg",
+    "https://nhathongminhvietsun.com/wp-content/uploads/2020/02/Dien-mat-troi-gia-dinh-1.jpg"
   ];
 
   // double _currentSliderRoofAreaValue = 0;

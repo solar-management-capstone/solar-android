@@ -63,7 +63,7 @@ class _WebViewContainerState extends State<WebViewContainer> {
               onNavigationRequest: (NavigationRequest request) {
                 log('navigation: ${request.url}');
                 if (request.url.startsWith(
-                  'https://admin-solar-hub.vercel.app/auth/login?status=success',
+                  'status=success',
                 )) {
                   Navigator.pushAndRemoveUntil(
                     context,
@@ -75,8 +75,8 @@ class _WebViewContainerState extends State<WebViewContainer> {
                     (route) => false,
                   );
                   return NavigationDecision.prevent;
-                } else if (request.url.startsWith(
-                  'https://admin-solar-hub.vercel.app/auth/login?status=failed',
+                } else if (request.url.endsWith(
+                  'status=failed',
                 )) {
                   Navigator.pushAndRemoveUntil(
                     context,

@@ -998,10 +998,10 @@ Widget _buildProductWidget(Product product, int quantity) {
         Text(
           'Nhà sản xuất: ${product.manufacturer}',
         ),
-        const SizedBox(height: 10.0),
-        Text(
-          'Tính năng: ${product.feature}',
-        ),
+        // const SizedBox(height: 10.0),
+        // Text(
+        //   'Tính năng: ${product.feature}',
+        // ),
         const SizedBox(height: 10.0),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

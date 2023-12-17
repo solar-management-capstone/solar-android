@@ -62,7 +62,7 @@ class _WebViewContainerState extends State<WebViewContainer> {
               },
               onNavigationRequest: (NavigationRequest request) {
                 log('navigation: ${request.url}');
-                if (request.url.startsWith(
+                if (request.url.endsWith(
                   'status=success',
                 )) {
                   Navigator.pushAndRemoveUntil(

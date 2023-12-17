@@ -693,9 +693,9 @@ class ConstructionContractDetailScreenState
                   ),
 
                 if (constructionContract.status == '3' &&
-                    constructionContract.paymentProcess?.length == 2 &&
-                    constructionContract.paymentProcess?[1].isDeposit == true &&
-                    constructionContract.paymentProcess?[1].status == 'success')
+                    constructionContract.paymentProcess?.length == 1 &&
+                    constructionContract.paymentProcess?[0].isDeposit == true &&
+                    constructionContract.paymentProcess?[0].status == 'success')
                   Container(
                     padding: const EdgeInsets.all(8.0),
                     color: Colors.white,

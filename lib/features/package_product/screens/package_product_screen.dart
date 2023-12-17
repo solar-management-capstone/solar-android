@@ -216,11 +216,11 @@ class _PackageProductScreenState extends State<PackageProductScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Diện tích mái: ${package.roofArea}m2',
+                          'Diện tích mái: ~${package.roofArea}m2',
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          'Hoá đơn điện: ${formatCurrency(package.electricBill!)}',
+                          'Hoá đơn điện: ~${formatCurrency(package.electricBill!)}',
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ],

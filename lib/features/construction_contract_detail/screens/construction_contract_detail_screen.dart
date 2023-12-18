@@ -362,8 +362,10 @@ class ConstructionContractDetailScreenState
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('${constructionContract.package?.name}',
-                                style: TextStyle(fontWeight: FontWeight.bold),),
+                                Text(
+                                  '${constructionContract.package?.name}',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
                                 Text(
                                   // 'Mô tả: ${constructionContract.package?.description}',
                                   '\n${constructionContract.package?.description}',
@@ -717,6 +719,32 @@ class ConstructionContractDetailScreenState
                   )
                 else if (constructionContract.status == '3' &&
                     constructionContract.paymentProcess?.length == 2 &&
+                    constructionContract.paymentProcess?[0].payDate == null &&
+                    constructionContract.paymentProcess?[0].isDeposit ==
+                        false &&
+                    constructionContract.paymentProcess?[0].status == 'Paid')
+                  Container(
+                    padding: const EdgeInsets.all(8.0),
+                    color: Colors.white,
+                    child: ElevatedButton(
+                      onPressed: () => _handlePayment(
+                        constructionContractId:
+                            constructionContract.constructioncontractId!,
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(double.infinity, 50),
+                      ),
+                      child: const Text(
+                        'Tất toán',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  )
+                else if (constructionContract.status == '3' &&
+                    constructionContract.paymentProcess?.length == 2 &&
+                    constructionContract.paymentProcess?[1].payDate == null &&
                     constructionContract.paymentProcess?[1].isDeposit ==
                         false &&
                     constructionContract.paymentProcess?[1].status == 'Paid')
@@ -741,6 +769,12 @@ class ConstructionContractDetailScreenState
                   )
                 else if (constructionContract.status == '3' &&
                     constructionContract.paymentProcess?.length == 2 &&
+                    constructionContract.paymentProcess?[0].payDate != null &&
+                    constructionContract.paymentProcess?[0].isDeposit ==
+                        false &&
+                    constructionContract.paymentProcess?[0].status ==
+                        'success' &&
+                    constructionContract.paymentProcess?[1].payDate != null &&
                     constructionContract.paymentProcess?[1].isDeposit ==
                         false &&
                     constructionContract.paymentProcess?[1].status ==
@@ -905,37 +939,28 @@ Widget _buildPaymentProcess(ConstructionContract constructionContract) {
 
 Widget _buildAcceptance(Acceptance acceptance) {
   return Container(
-    color: Colors.grey[200],
+    // color: Colors.grey[200],
     padding: const EdgeInsets.all(8.0),
-    child: Row(
-      children: [
-        SizedBox(
-          height: 50.0,
-          child: FullScreenWidget(
-            disposeLevel: DisposeLevel.High,
-            child: Center(
-              child: Hero(
-                tag: {acceptance.imageFile},
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: Image.network(
-                    acceptance.imageFile!,
-                    fit: BoxFit.cover,
-                  ),
+    child: Align(
+      alignment: Alignment.center,
+      child: SizedBox(
+        height: 100.0,
+        child: FullScreenWidget(
+          disposeLevel: DisposeLevel.High,
+          child: Center(
+            child: Hero(
+              tag: {acceptance.imageFile},
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: Image.network(
+                  acceptance.imageFile!,
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
           ),
         ),
-        const SizedBox(width: 8.0),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Mô tả đánh giá: ${acceptance.feedback!}'),
-            _buildQuantityIconStar(acceptance.rating!),
-          ],
-        )
-      ],
+      ),
     ),
   );
 }

@@ -27,7 +27,7 @@ class NotifyPaymentFailedScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              'Thanh toán hợp đồng không thành công',
+              'Thanh toán không thành công',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
             ),
             const Icon(

@@ -28,7 +28,7 @@ class NotifyPaymentSuccessScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              'Bạn đã thanh toán hợp đồng thành công',
+              'Bạn đã thanh toán thành công',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
             ),
             Icon(

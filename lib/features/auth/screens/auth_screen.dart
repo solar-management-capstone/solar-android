@@ -364,7 +364,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.black38),
                   ),
-                  labelText: 'Mật khẩu',
+                  labelText: 'Mật khẩu (Độ dài phải lớn hơn 6 kí tự)',
                 ),
                 validator: (String? value) {
                   if (value!.trim().isEmpty) {

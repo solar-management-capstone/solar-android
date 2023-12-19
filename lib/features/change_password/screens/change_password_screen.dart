@@ -116,7 +116,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.black38),
                   ),
-                  labelText: 'Mật khẩu mới',
+                  labelText: 'Mật khẩu mới (Độ dài phải lớn hơn 6 kí tự)',
                 ),
                 validator: (String? value) {
                   if (value!.trim().isEmpty) {

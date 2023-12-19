@@ -771,10 +771,6 @@ class ConstructionContractDetailScreenState
                     constructionContract.paymentProcess?.length == 2 &&
                     constructionContract.paymentProcess?[0].payDate != null &&
                     constructionContract.paymentProcess?[0].isDeposit ==
-                        false &&
-                    constructionContract.paymentProcess?[0].status ==
-                        'success' &&
-                    constructionContract.paymentProcess?[0].isDeposit ==
                         true &&
                     constructionContract.paymentProcess?[0].status ==
                         'success' &&
@@ -783,6 +779,38 @@ class ConstructionContractDetailScreenState
                         false &&
                     constructionContract.paymentProcess?[1].status ==
                         'success' &&
+                    constructionContract.feedback!.isEmpty)
+                  Container(
+                    padding: const EdgeInsets.all(8.0),
+                    color: Colors.white,
+                    child: ElevatedButton(
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => FeedbackScreen(
+                            constructionContract: constructionContract,
+                          ),
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(double.infinity, 50),
+                      ),
+                      child: const Text(
+                        'Đánh giá',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  )
+                else if (constructionContract.status == '3' &&
+                    constructionContract.paymentProcess?.length == 2 &&
+                    constructionContract.paymentProcess?[0].payDate != null &&
+                    constructionContract.paymentProcess?[0].isDeposit ==
+                        false &&
+                    constructionContract.paymentProcess?[0].status ==
+                        'success' &&
+                    constructionContract.paymentProcess?[1].payDate != null &&
                     constructionContract.paymentProcess?[1].isDeposit ==
                         true &&
                     constructionContract.paymentProcess?[1].status ==

@@ -4,6 +4,7 @@ import 'package:mobile_solar_mp/common/handle_exception/bad_request_exception.da
 import 'package:mobile_solar_mp/common/widgets/custom_textfield.dart';
 import 'package:mobile_solar_mp/constants/routes.dart';
 import 'package:mobile_solar_mp/constants/utils.dart';
+import 'package:mobile_solar_mp/features/construction_contract_detail/screens/construction_contract_detail_screen.dart';
 import 'package:mobile_solar_mp/features/history_construction_contract/service/history_construction_contract_service.dart';
 import 'package:mobile_solar_mp/models/construction_contract.dart';
 
@@ -17,10 +18,14 @@ class FeedbackScreen extends StatefulWidget {
   });
 
   @override
-  State<FeedbackScreen> createState() => _FeedbackScreenState();
+  State<FeedbackScreen> createState() =>
+      _FeedbackScreenState(constructionContract: constructionContract!);
 }
 
 class _FeedbackScreenState extends State<FeedbackScreen> {
+  ConstructionContract constructionContract;
+  _FeedbackScreenState({required this.constructionContract});
+
   late bool _isLoading = false;
   late double _rating = 0;
   final TextEditingController _feedbackDescriptionController =
@@ -49,7 +54,17 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
           context,
           'Đánh giá thành công',
         );
-        Navigator.pop(context);
+        // Navigator.pop(context);
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ConstructionContractDetailScreen(
+              constructionContract: constructionContract,
+              isReloadData: true,
+            ),
+          ),
+          (route) => false,
+        );
       }
     } on CustomException catch (e) {
       if (mounted) {

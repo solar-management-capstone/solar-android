@@ -774,9 +774,17 @@ class ConstructionContractDetailScreenState
                         false &&
                     constructionContract.paymentProcess?[0].status ==
                         'success' &&
+                    constructionContract.paymentProcess?[0].isDeposit ==
+                        true &&
+                    constructionContract.paymentProcess?[0].status ==
+                        'success' &&
                     constructionContract.paymentProcess?[1].payDate != null &&
                     constructionContract.paymentProcess?[1].isDeposit ==
                         false &&
+                    constructionContract.paymentProcess?[1].status ==
+                        'success' &&
+                    constructionContract.paymentProcess?[1].isDeposit ==
+                        true &&
                     constructionContract.paymentProcess?[1].status ==
                         'success' &&
                     constructionContract.feedback!.isEmpty)
